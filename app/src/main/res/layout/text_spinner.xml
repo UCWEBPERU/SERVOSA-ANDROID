@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@android:id/text1"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:minHeight="?android:attr/listPreferredItemHeight"
+    android:textAppearance="?android:attr/textAppearanceSmall"
+    android:textColor="@drawable/color_selector_spinner"
+    android:gravity="center_vertical"
+    android:textAllCaps="true"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="15dip"
+    android:ellipsize="marquee"
+    />

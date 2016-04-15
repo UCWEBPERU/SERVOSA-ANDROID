@@ -1,0 +1,96 @@
+<resources>
+    <string name="app_name">Servosa</string>
+
+    <!-- Activity Login -->
+    <string name="act_login_title_1">NOTIFICACIONES DE EVENTOS DE RIESGO</string>
+    <string name="act_login_title_2">EN RUTAS DE TRANSPORTE</string>
+    <string name="act_login_hint_input_username">USUARIO</string>
+    <string name="act_login_hint_input_password">●●●●●●●</string>
+    <string name="act_login_error_datos_usuario">Ingrese sus datos de usuario correctamente.</string>
+    <string name="act_login_error_login">Ocurrio un error iniciando sesion, intentalo de nuevo.</string>
+    <!-- - * - -->
+
+    <!-- Navigation Drawer -->
+    <string-array name="nav_drawer_labels">
+        <item>@string/nav_item_evento</item>
+        <item>@string/nav_item_listado_evento</item>
+        <item>@string/nav_item_estadisticas</item>
+        <item>@string/nav_item_exportar_excel</item>
+        <item>@string/nav_item_actualizar</item>
+        <item>@string/nav_item_configurar</item>
+        <item>@string/nav_item_cerrar</item>
+    </string-array>
+    <string name="nav_item_evento">Nuevo Evento</string>
+    <string name="nav_item_listado_evento">Listado de Eventos</string>
+    <string name="nav_item_estadisticas">Graficos Estadisticos</string>
+    <string name="nav_item_exportar_excel">Exportar Resumenes</string>
+    <string name="nav_item_actualizar">Actualizar</string>
+    <string name="nav_item_configurar">Configurar</string>
+    <string name="nav_item_cerrar">Cerrar</string>
+    <string name="drawer_open">Open</string>
+    <string name="drawer_close">Close</string>
+    <!-- - * - -->
+
+    <!-- Activity Main -->
+    <string name="act_main_text_title_1">Seleccione una opcion a realizar</string>
+    <string name="act_main_text_title_2">Opciones disponibles por rango de uso</string>
+    <string name="act_main_menu_1">NUEVO EVENTO</string>
+    <string name="act_main_menu_2">LISTADO DE EVENTOS</string>
+    <string name="act_main_menu_3">GRAFICOS ESTADISTICOS</string>
+    <string name="act_main_menu_4">EXPORTAR EXCELS</string>
+    <string name="act_main_menu_5">ACTUALIZAR</string>
+    <string name="act_main_menu_6">CONFIGURAR</string>
+    <string name="act_main_menu_7">CERRAR</string>
+    <!-- - * - -->
+
+    <!-- Activity Nuevo Evento -->
+    <string name="act_nuevo_evento_title">NUEVO EVENTO</string>
+    <string name="act_nuevo_evento_spnnr_text_1">SELECCIONE UNA OPERACION</string>
+    <string name="act_nuevo_evento_spnnr_text_2">SELECCIONE UNA RUTA</string>
+    <string name="act_nuevo_evento_spnnr_text_3">SELECCIONE UN TRAMO</string>
+    <string name="act_nuevo_evento_spnnr_text_4">EVENTO</string>
+    <string name="act_nuevo_evento_spnnr_text_5">CATEGORIA</string>
+    <string name="act_nuevo_evento_spnnr_text_6">TIPO</string>
+    <string name="act_nuevo_evento_spnnr_text_7">NUMERO DE PLACA</string>
+    <string name="act_nuevo_evento_spnnr_text_8">DESCRIPCION</string>
+    <string name="act_nuevo_evento_error_datos_ingresados">Seleccione e ingrese todos los datos correctamente antes de enviar su evento.</string>
+
+    <!-- - * - -->
+
+    <!-- Activity Listado de Eventos -->
+    <string name="act_listado_evento_title">LISTADO DE EVENTOS</string>
+    <string name="act_listado_evento_no_hay_eventos_registrados">Actualmente no tiene ningun evento registrado.</string>
+    <!-- - * - -->
+
+    <!-- Activity Graficos Estadisticos -->
+    <string name="act_graficos_estadisticos_title">PIRAMIDE NACIONAL</string>
+    <string name="act_graficos_estadisticos_texto_leyenda_muertes">Muerte / Incapacitantes</string>
+    <string name="act_graficos_estadisticos_texto_leyenda_accidentes_personales">Accidentes Daños Personales</string>
+    <string name="act_graficos_estadisticos_texto_leyenda_accidentes_propiedad">Accidentes Daños Propiedad</string>
+    <string name="act_graficos_estadisticos_texto_leyenda_casi_accidentes">Casi Accidentes</string>
+    <string name="act_graficos_estadisticos_texto_leyenda_condiciones_inseguras">Actos / Condiciones Inseguras</string>
+    <!-- - * - -->
+
+    <!-- Activity Exportar Excel -->
+    <string name="act_exportar_excel_title">EXPORTAR EXCELS</string>
+    <!-- - * - -->
+
+    <!-- Activity Configurar -->
+    <string name="act_configurar_title">CONFIGURACION</string>
+    <string name="act_configurar_btn_actualizacion_semanal">Actualizacion semanal</string>
+    <string name="act_configurar_btn_actualizacion_automatica">Actualizacion automatica</string>
+    <string name="act_configurar_btn_activar_gps">Activar GPS</string>
+    <string name="act_configurar_btn_notificar_error_app">Notificar error de la aplicacion</string>
+    <!-- - * - -->
+
+    <!-- Class: Connection -->
+    <string name="please_connect_to_internet">Compruebe su conexión a Internet e inténtalo de nuevo.</string>
+    <string name="title_dialog_connect_to_internet">No hay conexión a Internet.</string>
+    <string name="message_dialog_connect_to_internet">¿Desea activar o verificar su estado de conexion a Internet?</string>
+
+    <string name="json_object_exception">Ocurrio un error al procesar los datos recibidos.</string>
+    <!-- Class: Volley -->
+    <string name="volley_error_title">Error de conexión</string>
+    <string name="volley_error_message">Hubo un error y no se pudo procesar la solicitud.\n\nPor favor, inténtalo de nuevo.</string>
+
+</resources>
