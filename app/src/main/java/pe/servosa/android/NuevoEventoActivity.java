@@ -193,8 +193,6 @@ public class NuevoEventoActivity extends AppCompatActivity implements View.OnCli
             listSeleccioneTipo = new ArrayList<>();
             listSeleccionePlaca = new ArrayList<>();
 
-
-
             spnrSeleccioneOperacion.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -322,7 +320,7 @@ public class NuevoEventoActivity extends AppCompatActivity implements View.OnCli
             params.put("id_usuario", MyPreferences.getInstance().getString("id", ""));
 
             CustomJsonObjectRequest request = new CustomJsonObjectRequest
-                    (Request.Method.POST, MyVolley.URL_API_REST + "nuevo-evento/getAllData", params,
+                    (Request.Method.POST, MyVolley.URL_API_REST + "evento/getAllData", params,
                             new Response.Listener<JSONObject>() {
                 @Override
                 public void onResponse(JSONObject response) {
@@ -598,7 +596,7 @@ public class NuevoEventoActivity extends AppCompatActivity implements View.OnCli
                     });
                     progressDialog.dismiss();
                 } else {
-                    Toast.makeText(NuevoEventoActivity.this, "Ocurrio un error al guardar los registros necesarios para general un evento, vuelva a intentarlo por favor.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(NuevoEventoActivity.this, "Lo sentimos ocurrio un error al guardar los registros necesarios para generar un evento, inténtalo de nuevo.", Toast.LENGTH_LONG).show();
                 }
             }
         }
@@ -620,15 +618,21 @@ public class NuevoEventoActivity extends AppCompatActivity implements View.OnCli
 
                     params = new HashMap<String, String>();
 
+                    if (listSeleccioneTipo.size() > 2) {
+                        params.put("id_tipo", listSeleccioneTipo.get(spnrSeleccioneTipo.getSelectedItemPosition() - 1).getIDTipo().toString());
+                    } else {
+                        params.put("id_tipo", "");
+                    }
                     params.put("id_usuario", MyPreferences.getInstance().getString("id", ""));
-                    params.put("id_tipo", listSeleccioneTipo.get(spnrSeleccioneTipo.getSelectedItemPosition() - 1).getIDTipo().toString());
+                    params.put("id_evento", listSeleccioneEvento.get(spnrSeleccioneEvento.getSelectedItemPosition() - 1).getIDEvento().toString());
+                    params.put("id_categoria", listSeleccioneCategoria.get(spnrSeleccioneCategoria.getSelectedItemPosition() - 1).getIDCategoria().toString());
                     params.put("id_placa", listSeleccionePlaca.get(spnrSeleccioneNumPlaca.getSelectedItemPosition() - 1).getIDPlaca().toString());
                     params.put("id_tramo", listSeleccioneTramo.get(spnrSeleccioneTramo.getSelectedItemPosition() - 1).getIDTramo().toString());
                     params.put("descripcion", txtDescripcion.getText().toString().trim());
                     params.put("fecha_registro", fechaRegistro);
 
                     CustomJsonObjectRequest request = new CustomJsonObjectRequest
-                            (Request.Method.POST, MyVolley.URL_API_REST + "nuevo-evento/registrarEvento", params,
+                            (Request.Method.POST, MyVolley.URL_API_REST + "evento/registrarEvento", params,
                                     new Response.Listener<JSONObject>() {
                                         @Override
                                         public void onResponse(JSONObject response) {
@@ -689,10 +693,17 @@ public class NuevoEventoActivity extends AppCompatActivity implements View.OnCli
                     spnrSeleccioneTramo.getSelectedItemPosition() > 0 &&
                     spnrSeleccioneEvento.getSelectedItemPosition() > 0 &&
                     spnrSeleccioneCategoria.getSelectedItemPosition() > 0 &&
-                    spnrSeleccioneTipo.getSelectedItemPosition() > 0 &&
                     spnrSeleccioneNumPlaca.getSelectedItemPosition() > 0 &&
                     txtDescripcion.getText().toString().trim().length() > 0 ) {
-                    return true;
+                    if (listSeleccioneTipo.size() > 1) {
+                        if (spnrSeleccioneTipo.getSelectedItemPosition() > 0) {
+                            return true;
+                        } else {
+                            return false;
+                        }
+                    } else {
+                        return true;
+                    }
             }
             return false;
         }

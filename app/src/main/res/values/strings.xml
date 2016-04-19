@@ -68,7 +68,7 @@
     <string name="act_graficos_estadisticos_texto_leyenda_accidentes_personales">Accidentes Daños Personales</string>
     <string name="act_graficos_estadisticos_texto_leyenda_accidentes_propiedad">Accidentes Daños Propiedad</string>
     <string name="act_graficos_estadisticos_texto_leyenda_casi_accidentes">Casi Accidentes</string>
-    <string name="act_graficos_estadisticos_texto_leyenda_condiciones_inseguras">Actos / Condiciones Inseguras</string>
+    <string name="act_graficos_estadisticos_texto_leyenda_condiciones_inseguras">Comportamiento de Riesgo / Condiciones Inseguras</string>
     <!-- - * - -->
 
     <!-- Activity Exportar Excel -->

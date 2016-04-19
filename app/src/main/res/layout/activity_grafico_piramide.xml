@@ -28,7 +28,7 @@ tools:context="pe.servosa.android.NuevoEventoActivity">
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="@string/act_graficos_estadisticos_title"
-            android:id="@+id/textView12"
+            android:id="@+id/tituloHeader"
             android:textColor="@color/blanco"
             android:layout_gravity="center" />
     </FrameLayout>

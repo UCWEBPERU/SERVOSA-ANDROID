@@ -3,6 +3,7 @@ package pe.servosa.android.util;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 
 import pe.servosa.android.GraficoPiramideActivity;
@@ -61,6 +62,8 @@ public class ModalFiltroPiramide {
     }
 
     private void validarAccesoPorTipoUsuario(int posicionFiltroPrincipal) {
+        Bundle bundle = new Bundle();
+        Intent intent = new Intent(activity, GraficoPiramideActivity.class);
         if (MyPreferences.getInstance().getString("tipo_usuario", "").toLowerCase().equals("gerente")) { // Por Gerente
             if (posicionFiltroPrincipal == 0) {
 
@@ -80,11 +83,12 @@ public class ModalFiltroPiramide {
             }
         } else if (MyPreferences.getInstance().getString("tipo_usuario", "").toLowerCase().equals("supervisor")) { // Por Supervisor
             if (posicionFiltroPrincipal == 0) {
-
+                bundle.putString("filtro", "region");
             } else if (posicionFiltroPrincipal == 1) {
-
+                bundle.putString("filtro", "operacion");
             }
-            activity.startActivity(new Intent(activity, GraficoPiramideActivity.class));
+            intent.putExtra("filtros", bundle);
+            activity.startActivity(intent);
         }
     }
 
