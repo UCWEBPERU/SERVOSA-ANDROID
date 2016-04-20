@@ -54,6 +54,7 @@
     <string name="act_nuevo_evento_spnnr_text_7">NUMERO DE PLACA</string>
     <string name="act_nuevo_evento_spnnr_text_8">DESCRIPCION</string>
     <string name="act_nuevo_evento_error_datos_ingresados">Seleccione e ingrese todos los datos correctamente antes de enviar su evento.</string>
+    <string name="act_nuevo_evento_error_guardar_registros">Lo sentimos ocurrio un error al guardar los registros necesarios para generar un evento, inténtalo de nuevo.</string>
 
     <!-- - * - -->
 
@@ -88,9 +89,14 @@
     <string name="title_dialog_connect_to_internet">No hay conexión a Internet.</string>
     <string name="message_dialog_connect_to_internet">¿Desea activar o verificar su estado de conexion a Internet?</string>
 
+    <!-- Class: JSONObject -->
     <string name="json_object_exception">Ocurrio un error al procesar los datos recibidos.</string>
+
     <!-- Class: Volley -->
     <string name="volley_error_title">Error de conexión</string>
     <string name="volley_error_message">Hubo un error y no se pudo procesar la solicitud.\n\nPor favor, inténtalo de nuevo.</string>
+
+    <!-- Class: ModalFiltroPiramide -->
+    <string name="modal_filtro_piramide_error_registro_operaciones">Actualmente no tiene ningun registro de operaciones, sincronice los datos antes de proceder a este sección.</string>
 
 </resources>

@@ -14,7 +14,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -60,7 +59,7 @@ import pe.servosa.android.util.internet.CustomJsonObjectRequest;
 import pe.servosa.android.util.internet.MyVolley;
 import pe.servosa.android.util.internet.TaskPing;
 
-public class NuevoEventoActivity extends AppCompatActivity implements View.OnClickListener{
+public class NuevoEventoActivity extends AppCompatActivity {
 
     @Bind(R.id.toolbar) Toolbar toolbar;
     @Bind(R.id.imgHeaderServosa) ImageView imgHeaderServosa;
@@ -105,19 +104,6 @@ public class NuevoEventoActivity extends AppCompatActivity implements View.OnCli
         new TaskPing().execute(this);
     }
 
-    @Override
-    public void onClick(final View v) {
-//        new AlertDialog.Builder(this)
-//            .setTitle("Seleccione una operación")
-//                .setSingleChoiceItems(listSeleccioneOperacion, 0, new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialog, int which) {
-//                        ((TextView) v.findViewById(R.id.txtSeleccioneOperacion)).setText(listSeleccioneOperacion[which]);
-//                        dialog.dismiss();
-//                    }
-//                }).create().show();
-    }
-
     private void loadImages(){
         Glide.with(this)
                 .load(R.drawable.logo_servosa_header)
@@ -127,14 +113,6 @@ public class NuevoEventoActivity extends AppCompatActivity implements View.OnCli
     }
 
     private class ActivityManager {
-
-        private ArrayList<OperacionEntity> operacionEntities = new ArrayList<>();
-        private ArrayList<RutaEntity> rutaEntities = new ArrayList<>();
-        private ArrayList<TramoEntity> tramoEntities = new ArrayList<>();
-        private ArrayList<EventoEntity> eventoEntities = new ArrayList<>();
-        private ArrayList<CategoriaEntity> categoriaEntities = new ArrayList<>();
-        private ArrayList<TipoEntity> tipoEntities = new ArrayList<>();
-        private ArrayList<PlacaEntity> placaEntities = new ArrayList<>();
 
         private List<SqlOperacionEntity> sqlOperacionEntities;
         private List<SqlRutaEntity> sqlRutaEntities;
@@ -489,7 +467,6 @@ public class NuevoEventoActivity extends AppCompatActivity implements View.OnCli
             spnrSeleccioneTipo.setAdapter(adapter);
         }
 
-
         public class TaskProcesarRegistros extends AsyncTask<JSONObject, Integer, Boolean> {
 
             @Override
@@ -597,7 +574,7 @@ public class NuevoEventoActivity extends AppCompatActivity implements View.OnCli
                     });
                     progressDialog.dismiss();
                 } else {
-                    Toast.makeText(NuevoEventoActivity.this, "Lo sentimos ocurrio un error al guardar los registros necesarios para generar un evento, inténtalo de nuevo.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(NuevoEventoActivity.this, getString(R.string.act_nuevo_evento_error_guardar_registros), Toast.LENGTH_LONG).show();
                 }
             }
         }

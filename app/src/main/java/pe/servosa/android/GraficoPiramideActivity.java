@@ -107,6 +107,11 @@ public class GraficoPiramideActivity extends AppCompatActivity {
         } else {
             params.put("id_region", "");
         }
+        if (getIntent().getExtras().getBundle("filtros").getString("id_operacion") != null) {
+            params.put("id_operacion", getIntent().getExtras().getBundle("filtros").getString("id_operacion"));
+        } else {
+            params.put("id_operacion", "");
+        }
 
         Log.d("PARAMS", params.toString());
 
@@ -143,7 +148,7 @@ public class GraficoPiramideActivity extends AppCompatActivity {
                                 })
                                 .create().show();
                         error.printStackTrace();
-                        Log.d("VOLLEY ERROR", error.getMessage());
+//                        Log.d("VOLLEY ERROR", error.getMessage());
                     }
                 });
 
