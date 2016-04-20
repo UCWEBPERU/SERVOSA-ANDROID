@@ -369,6 +369,7 @@ public class NuevoEventoActivity extends AppCompatActivity implements View.OnCli
 
         private void cargarSpinnerOperaciones() {
             spinnerItemsOperacion.clear();
+            listSeleccioneOperacion.clear();
             spinnerItemsOperacion.add("Seleccione Operacion");
             if (sqlOperacionEntities != null) {
                 for (int c = 0; c < sqlOperacionEntities.size(); c++) {
@@ -618,7 +619,7 @@ public class NuevoEventoActivity extends AppCompatActivity implements View.OnCli
 
                     params = new HashMap<String, String>();
 
-                    if (listSeleccioneTipo.size() > 2) {
+                    if (listSeleccioneTipo.size() > 1) {
                         params.put("id_tipo", listSeleccioneTipo.get(spnrSeleccioneTipo.getSelectedItemPosition() - 1).getIDTipo().toString());
                     } else {
                         params.put("id_tipo", "");
@@ -630,6 +631,8 @@ public class NuevoEventoActivity extends AppCompatActivity implements View.OnCli
                     params.put("id_tramo", listSeleccioneTramo.get(spnrSeleccioneTramo.getSelectedItemPosition() - 1).getIDTramo().toString());
                     params.put("descripcion", txtDescripcion.getText().toString().trim());
                     params.put("fecha_registro", fechaRegistro);
+
+                    Log.d("PARAMS", params.toString());
 
                     CustomJsonObjectRequest request = new CustomJsonObjectRequest
                             (Request.Method.POST, MyVolley.URL_API_REST + "evento/registrarEvento", params,
@@ -688,6 +691,8 @@ public class NuevoEventoActivity extends AppCompatActivity implements View.OnCli
         }
 
         private boolean validarDatosIngresados() {
+            Log.d("VALIDAR DATOS", listSeleccioneTipo.size() + "");
+            Log.d("VALIDAR DATOS", spnrSeleccioneTipo.getSelectedItemPosition() + "");
             if (spnrSeleccioneOperacion.getSelectedItemPosition() > 0 &&
                     spnrSeleccioneRuta.getSelectedItemPosition() > 0 &&
                     spnrSeleccioneTramo.getSelectedItemPosition() > 0 &&
@@ -715,7 +720,7 @@ public class NuevoEventoActivity extends AppCompatActivity implements View.OnCli
                     listSeleccioneTramo.get(spnrSeleccioneTramo.getSelectedItemPosition() - 1).getNombreTramo().toString(),
                     listSeleccioneEvento.get(spnrSeleccioneEvento.getSelectedItemPosition() - 1).getNombreEvento().toString(),
                     listSeleccioneCategoria.get(spnrSeleccioneCategoria.getSelectedItemPosition() - 1).getNombreCategoria().toString(),
-                    listSeleccioneTipo.get(spnrSeleccioneTipo.getSelectedItemPosition() - 1).getNombreTipo().toString(),
+                    (listSeleccioneTipo.size() > 1) ? listSeleccioneTipo.get(spnrSeleccioneTipo.getSelectedItemPosition() - 1).getNombreTipo().toString() : "",
                     listSeleccionePlaca.get(spnrSeleccioneNumPlaca.getSelectedItemPosition() - 1).getPlaca().toString(),
                     txtDescripcion.getText().toString().trim(),
                     fechaRegistro

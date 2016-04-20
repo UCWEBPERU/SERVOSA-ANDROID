@@ -14,12 +14,14 @@ import pe.servosa.android.GraficoPiramideActivity;
 public class ModalFiltroPiramide {
 
     private String[] filtroGerente = new String[]{"Piramide Nacional", "Piramide Regional", "Piramide por Operacion"};
-    private String[] filtroSupervisor = new String[]{"Piramide Regional", "Piramide por Operacion"};
+    private String[] filtroSupervisor = new String[]{"Piramide Regional", "Piramide Operacion"};
     private String[] filtroRegion = new String[]{"Sur", "Norte", "Centro"};
 
     private static ModalFiltroPiramide modalFiltroPiramide;
 
     private Activity activity;
+    private Bundle bundle;
+    private Intent intent;
 
     private ModalFiltroPiramide() {
 
@@ -35,14 +37,16 @@ public class ModalFiltroPiramide {
 
     public ModalFiltroPiramide init(Activity activity){
         this.activity = activity;
+        bundle = new Bundle();
+        intent = new Intent(activity, GraficoPiramideActivity.class);
         return modalFiltroPiramide;
     }
 
     public void show() {
         String[] filtroPrincipal = mostrarFiltroPorTipoUsuario();
         new AlertDialog.Builder(activity)
-                .setTitle("Grafico Piramide")
-                .setSingleChoiceItems(filtroPrincipal, 0, new DialogInterface.OnClickListener() {
+                .setTitle("Piramide de Accidentabilidad")
+                .setSingleChoiceItems(filtroPrincipal, -1, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
@@ -62,24 +66,25 @@ public class ModalFiltroPiramide {
     }
 
     private void validarAccesoPorTipoUsuario(int posicionFiltroPrincipal) {
-        Bundle bundle = new Bundle();
-        Intent intent = new Intent(activity, GraficoPiramideActivity.class);
         if (MyPreferences.getInstance().getString("tipo_usuario", "").toLowerCase().equals("gerente")) { // Por Gerente
             if (posicionFiltroPrincipal == 0) {
-
+                bundle.putString("filtro", "nacional");
+                openPiramideActivity();
             } else if (posicionFiltroPrincipal == 1) {
+                bundle.putString("filtro", "region");
                 new AlertDialog.Builder(activity)
                         .setTitle("Piramide Regional")
-                        .setSingleChoiceItems(filtroRegion, 0, new DialogInterface.OnClickListener() {
+                        .setSingleChoiceItems(filtroRegion, -1, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 dialog.dismiss();
-                                activity.startActivity(new Intent(activity, GraficoPiramideActivity.class));
+                                bundle.putString("id_region", which + 1 + "");
+                                openPiramideActivity();
                             }
                         })
                         .create().show();
             } else if (posicionFiltroPrincipal == 2) {
-
+                bundle.putString("filtro", "operacion");
             }
         } else if (MyPreferences.getInstance().getString("tipo_usuario", "").toLowerCase().equals("supervisor")) { // Por Supervisor
             if (posicionFiltroPrincipal == 0) {
@@ -87,9 +92,13 @@ public class ModalFiltroPiramide {
             } else if (posicionFiltroPrincipal == 1) {
                 bundle.putString("filtro", "operacion");
             }
-            intent.putExtra("filtros", bundle);
-            activity.startActivity(intent);
+            openPiramideActivity();
         }
+    }
+
+    private void openPiramideActivity() {
+        intent.putExtra("filtros", bundle);
+        activity.startActivity(intent);
     }
 
 }
