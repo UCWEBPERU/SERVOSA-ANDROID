@@ -65,16 +65,16 @@ public class ModalFiltroPiramide {
     }
 
     private String[] mostrarFiltroPorTipoUsuario() {
-        if (MyPreferences.getInstance().getString("tipo_usuario", "").toLowerCase().equals("gerente")) { // Por Gerente
+        if (MyPreferences.getInstance().getString("id_tipo_usuario", "").toLowerCase().equals("2")) { // Por Gerente
             return filtroGerente;
-        } else if (MyPreferences.getInstance().getString("tipo_usuario", "").toLowerCase().equals("supervisor")) { // Por Supervisor
+        } else if (MyPreferences.getInstance().getString("id_tipo_usuario", "").toLowerCase().equals("1")) { // Por Supervisor
             return filtroSupervisor;
         }
         return new String[]{};
     }
 
     private void validarAccesoPorTipoUsuario(int posicionFiltroPrincipal) {
-        if (MyPreferences.getInstance().getString("tipo_usuario", "").toLowerCase().equals("gerente")) { // Por Gerente
+        if (MyPreferences.getInstance().getString("id_tipo_usuario", "").toLowerCase().equals("2")) { // Por Gerente
             if (posicionFiltroPrincipal == 0) {
                 bundle.putString("filtro", "nacional");
                 openPiramideActivity();
@@ -108,7 +108,7 @@ public class ModalFiltroPiramide {
                             .create().show();
                 }
             }
-        } else if (MyPreferences.getInstance().getString("tipo_usuario", "").toLowerCase().equals("supervisor")) { // Por Supervisor
+        } else if (MyPreferences.getInstance().getString("id_tipo_usuario", "").toLowerCase().equals("1")) { // Por Supervisor
             if (posicionFiltroPrincipal == 0) {
                 bundle.putString("filtro", "region");
             } else if (posicionFiltroPrincipal == 1) {

@@ -277,8 +277,14 @@ public class NuevoEventoActivity extends AppCompatActivity {
                 progressDialog.setCancelable(false);
                 progressDialog.setIndeterminate(true);
                 progressDialog.show();
-                mostrarRegistros();
-                getAllRegistros();
+                cargarDatosSQLite();
+                if (sqlEventoEntities.size() == 0) {
+                    mostrarRegistros();
+                    getAllRegistros();
+                } else {
+                    mostrarRegistros();
+                    progressDialog.dismiss();
+                }
             } else {
                 cargarDatosSQLite();
                 mostrarRegistros();

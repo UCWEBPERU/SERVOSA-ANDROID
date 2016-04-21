@@ -1,11 +1,17 @@
 package pe.servosa.android.util;
 
 import android.os.Environment;
+import android.util.Log;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.FieldPosition;
+import java.text.ParsePosition;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 
 import jxl.Workbook;
@@ -99,9 +105,9 @@ public class ReporteExcel {
             sheet.setColumnView(4, 25);
             sheet.setColumnView(5, 10);
             sheet.setColumnView(6, 35);
-            sheet.setColumnView(7, 35);
-            sheet.setColumnView(8, 10);
-            sheet.setColumnView(9, 10);
+            sheet.setColumnView(7, 20);
+            sheet.setColumnView(8, 20);
+            sheet.setColumnView(9, 20);
             sheet.setColumnView(10, 35);
             sheet.setColumnView(11, 50);
             sheet.setColumnView(12, 35);
@@ -154,6 +160,8 @@ public class ReporteExcel {
                 sheet.addCell(new Label(13, positionInitWriteRows, registros.get(i).getDescripcion(), getFormatContentRow(i)));
             } catch (WriteException ex) {
                 ex.printStackTrace();
+            } catch (NullPointerException ex) {
+                ex.printStackTrace();
             }
             positionInitWriteRows++;
         }
@@ -166,6 +174,8 @@ public class ReporteExcel {
         } catch (IOException ex) {
             ex.printStackTrace();
         } catch (WriteException ex) {
+            ex.printStackTrace();
+        } catch (NullPointerException ex){
             ex.printStackTrace();
         }
     }
@@ -183,9 +193,8 @@ public class ReporteExcel {
     }
 
     private File createFileExcel() {
-        Calendar calendar = Calendar.getInstance();
 
-        String fileName = "Datos de Accidentabilidad - " + calendar.get(Calendar.DATE) + " " + calendar.get(Calendar.HOUR) + ".xls";
+        String fileName = buildNameFileExcel();
 
         File directory = new File(getDirectory().getAbsolutePath() + "/Servosa/Reportes/");
 
@@ -201,4 +210,45 @@ public class ReporteExcel {
 //    public ArrayList<File> getExcelsExportados() {
 //        return excelsExportados;
 //    }
+
+    private String buildNameFileExcel() {
+        Date date = new Date();
+
+        String fecha;
+
+        fecha = new SimpleDateFormat("dd-MM-yyyy").format(date);
+
+        String fileName = "Reporte Datos de Accidentabilidad - " + fecha + ".xls";
+
+        int numFileExist = numExistFileExcel(fileName);
+
+        if (numFileExist != 0) {
+            fileName = "Reporte Datos de Accidentabilidad - " + fecha + " (" + ++numFileExist + ").xls";
+        }
+
+        date = null;
+        return fileName;
+    }
+
+    private int numExistFileExcel(String fileName) {
+        File files = new File(getDirectory().getAbsolutePath() + "/Servosa/Reportes/");
+        int count = 0;
+        if (files.exists()) {
+            File[] list = files.listFiles();
+
+            for (File f : list) {
+                String name = f.getName();
+                if (name.equals(fileName) && name.endsWith(".xls"))
+                    count++;
+//                System.out.println("Contador " + count);
+            }
+        }
+
+        files = null;
+        return count;
+    }
+
+    public File getFileExcel() {
+        return fileExcel;
+    }
 }

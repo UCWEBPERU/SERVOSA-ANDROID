@@ -74,6 +74,8 @@
 
     <!-- Activity Exportar Excel -->
     <string name="act_exportar_excel_title">EXPORTAR EXCELS</string>
+    <string name="act_exportar_no_hay_registros">No se encontro datos de accidentabilidad registrados.</string>
+    <string name="act_exportar_success_exportar_excel">El reporte en excel se ha genarado correctamente.</string>
     <!-- - * - -->
 
     <!-- Activity Configurar -->
@@ -90,7 +92,7 @@
     <string name="message_dialog_connect_to_internet">¿Desea activar o verificar su estado de conexion a Internet?</string>
 
     <!-- Class: JSONObject -->
-    <string name="json_object_exception">Ocurrio un error al procesar los datos recibidos.</string>
+    <string name="json_object_exception">Ocurrio un error al procesar los datos recibidos. Por favor, inténtalo de nuevo.</string>
 
     <!-- Class: Volley -->
     <string name="volley_error_title">Error de conexión</string>

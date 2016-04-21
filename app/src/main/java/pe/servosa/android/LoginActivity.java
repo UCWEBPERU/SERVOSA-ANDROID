@@ -94,7 +94,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private void initSession() {
         Map<String, String> params = new HashMap<String, String>();
-        params.put("email", txtUserName.getText().toString().trim());
+        params.put("username", txtUserName.getText().toString().trim());
         params.put("password", txtPassword.getText().toString().trim());
 
         CustomJsonObjectRequest request = new CustomJsonObjectRequest
@@ -147,7 +147,8 @@ public class LoginActivity extends AppCompatActivity {
     private void saveUserProfile(JSONObject usuario) throws JSONException{
         MyPreferences.getInstance().edit()
                 .putString("id", usuario.getString("id_usuario"))
-                .putString("email", txtUserName.getText().toString().trim())
+                .putString("email", usuario.getString("email"))
+                .putString("username", txtUserName.getText().toString().trim())
                 .putString("tipo_usuario", usuario.getString("nombre_tipo_usuario"))
                 .putString("id_tipo_usuario", usuario.getString("id_tipo_usuario"))
                 .commit();

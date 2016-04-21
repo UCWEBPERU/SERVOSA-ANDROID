@@ -59,10 +59,10 @@ public class PiramideAccidentabilidadAdapter extends BaseAdapter {
 
         PiramideAccidentabilidadEntity currentListData = (PiramideAccidentabilidadEntity) getItem(position);
 
-        mViewHolder.txtOperacion.setText("Operacion:" + currentListData.getOperacion());
-        mViewHolder.txtRuta.setText("Ruta:" + currentListData.getRuta());
-        mViewHolder.txtTramo.setText("Tramo:" + currentListData.getTramo());
-        mViewHolder.txtEvento.setText("Evento:" + currentListData.getEvento());
+        mViewHolder.txtOperacion.setText("Operacion: " + currentListData.getOperacion());
+        mViewHolder.txtRuta.setText("Ruta: " + currentListData.getRuta());
+        mViewHolder.txtTramo.setText("Tramo: " + currentListData.getTramo());
+        mViewHolder.txtEvento.setText("Evento: " + currentListData.getEvento());
         mViewHolder.txtFechaHora.setText(currentListData.getFecha() + " / " + currentListData.getHora());
 
         return convertView;

@@ -1,144 +1,31 @@
 package pe.servosa.android.util;
 
-import android.app.Activity;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import java.io.File;
 import java.util.ArrayList;
 
+import pe.servosa.android.interfaces.TaskExportarExcelDelegate;
 import pe.servosa.android.model.PiramideAccidentabilidadEntity;
 
 /**
  * Created by ucweb02 on 20/04/2016.
  */
-public class TaskExportarExcel extends AsyncTask<Void, Integer, Boolean> {
+public class TaskExportarExcel extends AsyncTask<Object, Integer, File> {
+
+    private TaskExportarExcelDelegate delegate;
+
+    public TaskExportarExcel(TaskExportarExcelDelegate delegate) {
+        this.delegate = delegate;
+    }
 
     @Override
-    protected Boolean doInBackground(Void... params) {
+    protected File doInBackground(Object... params) {
         Log.d("EXPORTAR EXCEL", "INICIA");
-        ArrayList<PiramideAccidentabilidadEntity> registros = new ArrayList<>();
-        PiramideAccidentabilidadEntity registro = new PiramideAccidentabilidadEntity(
-                "CENTRO",
-                "TGP",
-                "TRUJILLO",
-                "CORCONA - LA OROYA",
-                "B7D-875",
-                "LUIS ANGEL JURADO CISNEROS",
-                "NIVEL 2",
-                "07/12/2015",
-                "05:15:00 a.m.",
-                "Comportamiento de riesgo",
-                "ADELANTAMIENTO",
-                "ADELANTAR EN CURVA",
-                "Incidente D5B-871 km 45 Ancon - Conductor: William Congora"
-        );
-        registros.add(registro);
-
-        registro = new PiramideAccidentabilidadEntity(
-                "CENTRO",
-                "INDUSTRIAS",
-                "CHUNGAR",
-                "CORCONA - LA OROYA",
-                "B7X-456",
-                "OMAR SANTILLAN CHUQUIMBALQUI",
-                "NIVEL 2",
-                "07/12/2015",
-                "06:00:00 a.m.",
-                "Casi Accidentes",
-                "DESENGANCHE DE TRACTO QUEDANDO EN TORNA MESA",
-                "-",
-                "Al momento de enganchar su cisterna el Conductor: Filomeno Chocanga no reviso que se el gavilan haya cerrado de forma correcta en el cual al momento de avanzar se desengancho la cisterna quedando recostada sobre el chasis del tracto."
-        );
-        registros.add(registro);
-
-        registro = new PiramideAccidentabilidadEntity(
-                "CENTRO",
-                "INDUSTRIAS",
-                "CHUNGAR",
-                "CORCONA - LA OROYA",
-                "B7X-456",
-                "OMAR SANTILLAN CHUQUIMBALQUI",
-                "NIVEL 2",
-                "07/12/2015",
-                "06:00:00 a.m.",
-                "Casi Accidentes",
-                "DESENGANCHE DE TRACTO QUEDANDO EN TORNA MESA",
-                "-",
-                "Al momento de enganchar su cisterna el Conductor: Filomeno Chocanga no reviso que se el gavilan haya cerrado de forma correcta en el cual al momento de avanzar se desengancho la cisterna quedando recostada sobre el chasis del tracto."
-        );
-        registros.add(registro);
-
-        registro = new PiramideAccidentabilidadEntity(
-                "CENTRO",
-                "INDUSTRIAS",
-                "CHUNGAR",
-                "CORCONA - LA OROYA",
-                "B7X-456",
-                "OMAR SANTILLAN CHUQUIMBALQUI",
-                "NIVEL 2",
-                "07/12/2015",
-                "06:00:00 a.m.",
-                "Casi Accidentes",
-                "DESENGANCHE DE TRACTO QUEDANDO EN TORNA MESA",
-                "-",
-                "Al momento de enganchar su cisterna el Conductor: Filomeno Chocanga no reviso que se el gavilan haya cerrado de forma correcta en el cual al momento de avanzar se desengancho la cisterna quedando recostada sobre el chasis del tracto."
-        );
-        registros.add(registro);
-
-        registro = new PiramideAccidentabilidadEntity(
-                "CENTRO",
-                "INDUSTRIAS",
-                "CHUNGAR",
-                "CORCONA - LA OROYA",
-                "B7X-456",
-                "OMAR SANTILLAN CHUQUIMBALQUI",
-                "NIVEL 2",
-                "07/12/2015",
-                "06:00:00 a.m.",
-                "Casi Accidentes",
-                "DESENGANCHE DE TRACTO QUEDANDO EN TORNA MESA",
-                "-",
-                "Al momento de enganchar su cisterna el Conductor: Filomeno Chocanga no reviso que se el gavilan haya cerrado de forma correcta en el cual al momento de avanzar se desengancho la cisterna quedando recostada sobre el chasis del tracto."
-        );
-        registros.add(registro);
-
-        registro = new PiramideAccidentabilidadEntity(
-                "CENTRO",
-                "INDUSTRIAS",
-                "CHUNGAR",
-                "CORCONA - LA OROYA",
-                "B7X-456",
-                "OMAR SANTILLAN CHUQUIMBALQUI",
-                "NIVEL 2",
-                "07/12/2015",
-                "06:00:00 a.m.",
-                "Casi Accidentes",
-                "DESENGANCHE DE TRACTO QUEDANDO EN TORNA MESA",
-                "-",
-                "Al momento de enganchar su cisterna el Conductor: Filomeno Chocanga no reviso que se el gavilan haya cerrado de forma correcta en el cual al momento de avanzar se desengancho la cisterna quedando recostada sobre el chasis del tracto."
-        );
-        registros.add(registro);
-
-        registro = new PiramideAccidentabilidadEntity(
-                "CENTRO",
-                "INDUSTRIAS",
-                "CHUNGAR",
-                "CORCONA - LA OROYA",
-                "B7X-456",
-                "OMAR SANTILLAN CHUQUIMBALQUI",
-                "NIVEL 2",
-                "07/12/2015",
-                "06:00:00 a.m.",
-                "Casi Accidentes",
-                "DESENGANCHE DE TRACTO QUEDANDO EN TORNA MESA",
-                "-",
-                "Al momento de enganchar su cisterna el Conductor: Filomeno Chocanga no reviso que se el gavilan haya cerrado de forma correcta en el cual al momento de avanzar se desengancho la cisterna quedando recostada sobre el chasis del tracto."
-        );
-        registros.add(registro);
-
-        ReporteExcel reporteExcel = new ReporteExcel(registros);
+        ReporteExcel reporteExcel = new ReporteExcel((ArrayList<PiramideAccidentabilidadEntity>) params[0]);
         reporteExcel.exportar();
-        return true;
+        return reporteExcel.getFileExcel();
     }
 
     @Override
@@ -148,13 +35,13 @@ public class TaskExportarExcel extends AsyncTask<Void, Integer, Boolean> {
 
     @Override
     protected void onPreExecute() {
-
-
+        delegate.taskOnInit();
     }
 
     @Override
-    protected void onPostExecute(Boolean result) {
+    protected void onPostExecute(File fileExcel) {
         Log.d("EXPORTAR EXCEL", "FINALIZO");
+        delegate.taskOnCompletion(fileExcel);
 //        if (result) {
 //            progressDialog.dismiss();
 //            if (posicionesauxiliar.size() > 1) {

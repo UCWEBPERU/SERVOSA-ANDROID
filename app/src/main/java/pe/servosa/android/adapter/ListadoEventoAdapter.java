@@ -58,10 +58,10 @@ public class ListadoEventoAdapter extends BaseAdapter{
 
         EventoRiesgoEntity currentListData = (EventoRiesgoEntity) getItem(position);
 
-        mViewHolder.txtOperacion.setText("Operacion:" + currentListData.getOperacion());
-        mViewHolder.txtRuta.setText("Ruta:" + currentListData.getRuta());
-        mViewHolder.txtTramo.setText("Tramo:" + currentListData.getTramo());
-        mViewHolder.txtEvento.setText("Evento:" + currentListData.getEvento());
+        mViewHolder.txtOperacion.setText("Operacion: " + currentListData.getOperacion());
+        mViewHolder.txtRuta.setText("Ruta: " + currentListData.getRuta());
+        mViewHolder.txtTramo.setText("Tramo: " + currentListData.getTramo());
+        mViewHolder.txtEvento.setText("Evento: " + currentListData.getEvento());
         mViewHolder.txtFechaHora.setText(currentListData.getFechaHora());
 
         return convertView;

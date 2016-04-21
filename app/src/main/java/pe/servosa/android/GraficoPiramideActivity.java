@@ -100,6 +100,7 @@ public class GraficoPiramideActivity extends AppCompatActivity {
 
         params.put("id_usuario", MyPreferences.getInstance().getString("id", ""));
         params.put("tipo_usuario", MyPreferences.getInstance().getString("tipo_usuario", ""));
+        params.put("id_tipo_usuario", MyPreferences.getInstance().getString("id_tipo_usuario", ""));
         params.put("filtro", getIntent().getExtras().getBundle("filtros").getString("filtro"));
 
         if (getIntent().getExtras().getBundle("filtros").getString("id_region") != null) {
