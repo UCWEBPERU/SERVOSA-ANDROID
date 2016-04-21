@@ -41,6 +41,7 @@
     <string name="act_main_menu_5">ACTUALIZAR</string>
     <string name="act_main_menu_6">CONFIGURAR</string>
     <string name="act_main_menu_7">CERRAR</string>
+    <string name="act_main_informacion_actualizada">Informacion Actualizada</string>
     <!-- - * - -->
 
     <!-- Activity Nuevo Evento -->
@@ -78,16 +79,16 @@
 
     <!-- Activity Configurar -->
     <string name="act_configurar_title">CONFIGURACION</string>
-    <string name="act_configurar_btn_actualizacion_semanal">Actualizacion semanal</string>
-    <string name="act_configurar_btn_actualizacion_automatica">Actualizacion automatica</string>
+    <string name="act_configurar_btn_actualizacion">Actualizar Información</string>
     <string name="act_configurar_btn_activar_gps">Activar GPS</string>
-    <string name="act_configurar_btn_notificar_error_app">Notificar error de la aplicacion</string>
+    <string name="act_configurar_btn_activar_wifi">Activar WIFI</string>
+    <string name="act_configurar_btn_notificar_error_app">Notificar error de la aplicación</string>
     <!-- - * - -->
 
     <!-- Class: Connection -->
     <string name="please_connect_to_internet">Compruebe su conexión a Internet e inténtalo de nuevo.</string>
     <string name="title_dialog_connect_to_internet">No hay conexión a Internet.</string>
-    <string name="message_dialog_connect_to_internet">¿Desea activar o verificar su estado de conexion a Internet?</string>
+    <string name="message_dialog_connect_to_internet"></string>
 
     <!-- Class: JSONObject -->
     <string name="json_object_exception">Ocurrio un error al procesar los datos recibidos.</string>

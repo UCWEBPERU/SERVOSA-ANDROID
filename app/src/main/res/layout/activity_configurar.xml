@@ -54,36 +54,18 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:text="@string/act_configurar_btn_actualizacion_semanal"
+                    android:text="@string/act_configurar_btn_actualizacion"
                     android:id="@+id/textView13"
                     android:layout_gravity="center_vertical|left" />
 
                 <Switch
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/switch1"
-                    android:layout_gravity="center_vertical|right" />
-            </FrameLayout>
-
-            <FrameLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:text="@string/act_configurar_btn_actualizacion_automatica"
-                    android:layout_gravity="center_vertical|left" />
-
-                <Switch
+                    android:id="@+id/s_actualizar"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical|right" />
             </FrameLayout>
+
+
 
             <FrameLayout
                 android:orientation="horizontal"
@@ -100,6 +82,27 @@
                     android:layout_gravity="center_vertical|left" />
 
                 <Switch
+                    android:id="@+id/s_gps"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical|right" />
+            </FrameLayout>
+            <FrameLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="@string/act_configurar_btn_activar_wifi"
+                    android:layout_gravity="center_vertical|left" />
+
+                <Switch
+                    android:id="@+id/s_wifi"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical|right" />
@@ -120,6 +123,7 @@
                     android:layout_gravity="center_vertical|left" />
 
                 <Switch
+                    android:id="@+id/s_email"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical|right" />
