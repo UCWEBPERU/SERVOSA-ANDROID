@@ -10,7 +10,6 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
-import pe.servosa.android.GraficoPiramideActivity;
 import pe.servosa.android.R;
 import pe.servosa.android.sqlite.model.SqlOperacionEntity;
 
@@ -47,11 +46,11 @@ public class ModalFiltroPiramide {
     public ModalFiltroPiramide init(Activity activity){
         this.activity = activity;
         bundle = new Bundle();
-        intent = new Intent(activity, GraficoPiramideActivity.class);
         return modalFiltroPiramide;
     }
 
-    public void show() {
+    public void show(Intent intent) {
+        this.intent = intent;
         String[] filtroPrincipal = mostrarFiltroPorTipoUsuario();
         new AlertDialog.Builder(activity)
                 .setTitle("Piramide de Accidentabilidad")

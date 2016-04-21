@@ -68,14 +68,14 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
         btnGraficoPiramide.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ModalFiltroPiramide.getInstance().init(MainActivity.this).show();
+                ModalFiltroPiramide.getInstance().init(MainActivity.this).show(new Intent(MainActivity.this, GraficoPiramideActivity.class));
             }
         });
 
         btnExportarExcel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(), ExportarExcelActivity.class));
+                ModalFiltroPiramide.getInstance().init(MainActivity.this).show(new Intent(MainActivity.this, ExportarExcelActivity.class));
             }
         });
 
@@ -117,10 +117,10 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
                 startActivity(new Intent(getApplicationContext(), ListadoEventosActivity.class));
                 break;
             case 2:
-                ModalFiltroPiramide.getInstance().init(MainActivity.this).show();
+                ModalFiltroPiramide.getInstance().init(MainActivity.this).show(new Intent(MainActivity.this, GraficoPiramideActivity.class));
                 break;
             case 3:
-                startActivity(new Intent(getApplicationContext(), ExportarExcelActivity.class));
+                ModalFiltroPiramide.getInstance().init(MainActivity.this).show(new Intent(MainActivity.this, ExportarExcelActivity.class));
                 break;
             case 4:
                 break;

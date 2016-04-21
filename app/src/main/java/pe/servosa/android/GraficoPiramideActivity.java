@@ -126,9 +126,11 @@ public class GraficoPiramideActivity extends AppCompatActivity {
                                     if (response.getBoolean("status")) {
                                         mostrarPiramide(response.getJSONObject("data"));
                                     } else {
+                                        cargarPiramideError();
                                         Toast.makeText(GraficoPiramideActivity.this, response.getString("message"), Toast.LENGTH_LONG).show();
                                     }
                                 } catch (JSONException ex) {
+                                    cargarPiramideError();
                                     Toast.makeText(GraficoPiramideActivity.this, getString(R.string.json_object_exception), Toast.LENGTH_LONG).show();
                                 }
                             }
