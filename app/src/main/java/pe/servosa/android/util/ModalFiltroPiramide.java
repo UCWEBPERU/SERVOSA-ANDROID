@@ -10,7 +10,6 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
-import pe.servosa.android.GraficoPiramideActivity;
 import pe.servosa.android.R;
 import pe.servosa.android.sqlite.model.SqlOperacionEntity;
 
@@ -47,11 +46,11 @@ public class ModalFiltroPiramide {
     public ModalFiltroPiramide init(Activity activity){
         this.activity = activity;
         bundle = new Bundle();
-        intent = new Intent(activity, GraficoPiramideActivity.class);
         return modalFiltroPiramide;
     }
 
-    public void show() {
+    public void show(Intent intent) {
+        this.intent = intent;
         String[] filtroPrincipal = mostrarFiltroPorTipoUsuario();
         new AlertDialog.Builder(activity)
                 .setTitle("Piramide de Accidentabilidad")
@@ -66,16 +65,16 @@ public class ModalFiltroPiramide {
     }
 
     private String[] mostrarFiltroPorTipoUsuario() {
-        if (MyPreferences.getInstance().getString("tipo_usuario", "").toLowerCase().equals("gerente")) { // Por Gerente
+        if (MyPreferences.getInstance().getString("id_tipo_usuario", "").toLowerCase().equals("2")) { // Por Gerente
             return filtroGerente;
-        } else if (MyPreferences.getInstance().getString("tipo_usuario", "").toLowerCase().equals("supervisor")) { // Por Supervisor
+        } else if (MyPreferences.getInstance().getString("id_tipo_usuario", "").toLowerCase().equals("1")) { // Por Supervisor
             return filtroSupervisor;
         }
         return new String[]{};
     }
 
     private void validarAccesoPorTipoUsuario(int posicionFiltroPrincipal) {
-        if (MyPreferences.getInstance().getString("tipo_usuario", "").toLowerCase().equals("gerente")) { // Por Gerente
+        if (MyPreferences.getInstance().getString("id_tipo_usuario", "").toLowerCase().equals("2")) { // Por Gerente
             if (posicionFiltroPrincipal == 0) {
                 bundle.putString("filtro", "nacional");
                 openPiramideActivity();
@@ -109,7 +108,7 @@ public class ModalFiltroPiramide {
                             .create().show();
                 }
             }
-        } else if (MyPreferences.getInstance().getString("tipo_usuario", "").toLowerCase().equals("supervisor")) { // Por Supervisor
+        } else if (MyPreferences.getInstance().getString("id_tipo_usuario", "").toLowerCase().equals("1")) { // Por Supervisor
             if (posicionFiltroPrincipal == 0) {
                 bundle.putString("filtro", "region");
             } else if (posicionFiltroPrincipal == 1) {

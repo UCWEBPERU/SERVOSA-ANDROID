@@ -100,6 +100,7 @@ public class GraficoPiramideActivity extends AppCompatActivity {
 
         params.put("id_usuario", MyPreferences.getInstance().getString("id", ""));
         params.put("tipo_usuario", MyPreferences.getInstance().getString("tipo_usuario", ""));
+        params.put("id_tipo_usuario", MyPreferences.getInstance().getString("id_tipo_usuario", ""));
         params.put("filtro", getIntent().getExtras().getBundle("filtros").getString("filtro"));
 
         if (getIntent().getExtras().getBundle("filtros").getString("id_region") != null) {
@@ -126,9 +127,11 @@ public class GraficoPiramideActivity extends AppCompatActivity {
                                     if (response.getBoolean("status")) {
                                         mostrarPiramide(response.getJSONObject("data"));
                                     } else {
+                                        cargarPiramideError();
                                         Toast.makeText(GraficoPiramideActivity.this, response.getString("message"), Toast.LENGTH_LONG).show();
                                     }
                                 } catch (JSONException ex) {
+                                    cargarPiramideError();
                                     Toast.makeText(GraficoPiramideActivity.this, getString(R.string.json_object_exception), Toast.LENGTH_LONG).show();
                                 }
                             }

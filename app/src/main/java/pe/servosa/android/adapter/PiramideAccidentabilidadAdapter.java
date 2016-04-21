@@ -11,19 +11,20 @@ import java.util.ArrayList;
 
 import pe.servosa.android.R;
 import pe.servosa.android.model.EventoRiesgoEntity;
+import pe.servosa.android.model.PiramideAccidentabilidadEntity;
 
 /**
- * Created by ucweb02 on 08/04/2016.
+ * Created by ucweb02 on 20/04/2016.
  */
-public class ListadoEventoAdapter extends BaseAdapter{
+public class PiramideAccidentabilidadAdapter extends BaseAdapter {
 
-    ArrayList<EventoRiesgoEntity> listListadoEventoModel;
+    ArrayList<PiramideAccidentabilidadEntity> registros;
     LayoutInflater inflater;
     Context context;
     Integer resIDLayoutRow;
 
-    public ListadoEventoAdapter(Context context, ArrayList<EventoRiesgoEntity> data, Integer resID) {
-        this.listListadoEventoModel = data;
+    public PiramideAccidentabilidadAdapter(Context context, ArrayList<PiramideAccidentabilidadEntity> data, Integer resID) {
+        this.registros = data;
         this.context = context;
         this.resIDLayoutRow = resID;
         inflater = LayoutInflater.from(this.context);
@@ -31,12 +32,12 @@ public class ListadoEventoAdapter extends BaseAdapter{
 
     @Override
     public int getCount() {
-        return listListadoEventoModel.size();
+        return registros.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return listListadoEventoModel.get(position);
+        return registros.get(position);
     }
 
     @Override
@@ -56,13 +57,13 @@ public class ListadoEventoAdapter extends BaseAdapter{
             mViewHolder = (MyViewHolder) convertView.getTag();
         }
 
-        EventoRiesgoEntity currentListData = (EventoRiesgoEntity) getItem(position);
+        PiramideAccidentabilidadEntity currentListData = (PiramideAccidentabilidadEntity) getItem(position);
 
         mViewHolder.txtOperacion.setText("Operacion: " + currentListData.getOperacion());
         mViewHolder.txtRuta.setText("Ruta: " + currentListData.getRuta());
         mViewHolder.txtTramo.setText("Tramo: " + currentListData.getTramo());
         mViewHolder.txtEvento.setText("Evento: " + currentListData.getEvento());
-        mViewHolder.txtFechaHora.setText(currentListData.getFechaHora());
+        mViewHolder.txtFechaHora.setText(currentListData.getFecha() + " / " + currentListData.getHora());
 
         return convertView;
     }
