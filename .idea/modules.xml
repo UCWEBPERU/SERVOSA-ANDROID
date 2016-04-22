@@ -2,8 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/SERVOSA-ANDROID.iml" filepath="$PROJECT_DIR$/SERVOSA-ANDROID.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Servosa.iml" filepath="$PROJECT_DIR$/Servosa.iml" />
     </modules>
   </component>
 </project>
