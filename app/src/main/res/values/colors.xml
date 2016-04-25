@@ -13,4 +13,8 @@
     <color name="amarillo">#ffcb04</color>
     <color name="azul_b">#183972</color>
     <color name="azul_c">#052346</color>
+
+
+    <color name="default_slice_color">#88FF0000</color>
+    <color name="default_line_color">#88FFFFFF</color>
 </resources>

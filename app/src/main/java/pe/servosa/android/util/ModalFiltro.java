@@ -10,20 +10,21 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
+import pe.servosa.android.GraficoCompSeguroActivity;
+import pe.servosa.android.GraficoPiramideBridActivity;
 import pe.servosa.android.R;
 import pe.servosa.android.sqlite.model.SqlOperacionEntity;
 
 /**
  * Created by ucweb02 on 15/04/2016.
  */
-public class ModalFiltroPiramide {
+public abstract class ModalFiltro {
 
-    private String[] filtroGerente = new String[]{"Piramide Nacional", "Piramide Regional", "Piramide por Operacion"};
-    private String[] filtroSupervisor = new String[]{"Piramide Regional", "Piramide Operacion"};
-    private String[] filtroRegion = new String[]{"Sur", "Norte", "Centro"};
+    private String[] seleccionePresentacionDatos;
+    private String[] filtroGerente;
+    private String[] filtroSupervisor;
+    protected String[] filtroRegion = new String[]{"Sur", "Norte", "Centro"};
     private List<String> filtroOperacion;
-
-    private static ModalFiltroPiramide modalFiltroPiramide;
 
     private Activity activity;
     private Bundle bundle;
@@ -31,29 +32,25 @@ public class ModalFiltroPiramide {
 
     private List<SqlOperacionEntity> sqlOperacionEntities;
 
-    private ModalFiltroPiramide() {
-
-    }
-
-    public static ModalFiltroPiramide getInstance() {
-        if (modalFiltroPiramide == null) {
-            modalFiltroPiramide = new ModalFiltroPiramide();
-            return modalFiltroPiramide;
-        }
-        return modalFiltroPiramide;
-    }
-
-    public ModalFiltroPiramide init(Activity activity){
+    protected ModalFiltro(Activity activity) {
         this.activity = activity;
         bundle = new Bundle();
-        return modalFiltroPiramide;
     }
 
-    public void show(Intent intent) {
-        this.intent = intent;
+    abstract public void showModal();
+    abstract public void destroy();
+
+    protected void showModalOpciones(int tipoGrafico) {
         String[] filtroPrincipal = mostrarFiltroPorTipoUsuario();
+
+        if (tipoGrafico == 0) {
+            bundle.putBoolean("isPiramideBrid", true);
+        } else {
+            bundle.putBoolean("isPiramideBrid", false);
+        }
+
         new AlertDialog.Builder(activity)
-                .setTitle("Piramide de Accidentabilidad")
+                .setTitle((tipoGrafico == 0) ? seleccionePresentacionDatos[0] : seleccionePresentacionDatos[1])
                 .setSingleChoiceItems(filtroPrincipal, -1, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -62,6 +59,9 @@ public class ModalFiltroPiramide {
                     }
                 })
                 .create().show();
+
+
+
     }
 
     private String[] mostrarFiltroPorTipoUsuario() {
@@ -77,7 +77,7 @@ public class ModalFiltroPiramide {
         if (MyPreferences.getInstance().getString("id_tipo_usuario", "").toLowerCase().equals("2")) { // Por Gerente
             if (posicionFiltroPrincipal == 0) {
                 bundle.putString("filtro", "nacional");
-                openPiramideActivity();
+                openActivity();
             } else if (posicionFiltroPrincipal == 1) {
                 bundle.putString("filtro", "region");
                 new AlertDialog.Builder(activity)
@@ -87,7 +87,7 @@ public class ModalFiltroPiramide {
                             public void onClick(DialogInterface dialog, int which) {
                                 dialog.dismiss();
                                 bundle.putString("id_region", which + 1 + "");
-                                openPiramideActivity();
+                                openActivity();
                             }
                         })
                         .create().show();
@@ -102,7 +102,7 @@ public class ModalFiltroPiramide {
                                     dialog.dismiss();
                                     bundle.putString("id_operacion", sqlOperacionEntities.get(which).getIDOperacion().toString());
                                     bundle.putString("filtro", "operacion");
-                                    openPiramideActivity();
+                                    openActivity();
                                 }
                             })
                             .create().show();
@@ -114,11 +114,11 @@ public class ModalFiltroPiramide {
             } else if (posicionFiltroPrincipal == 1) {
                 bundle.putString("filtro", "operacion");
             }
-            openPiramideActivity();
+            openActivity();
         }
     }
 
-    private void openPiramideActivity() {
+    private void openActivity() {
         intent.putExtra("filtros", bundle);
         activity.startActivity(intent);
     }
@@ -136,4 +136,35 @@ public class ModalFiltroPiramide {
         }
     }
 
+    public void setIntent(Intent intent) {
+        this.intent = intent;
+    }
+
+    public Activity getActivity() {
+        return this.activity;
+    }
+
+    public void setSeleccionePresentacionDatos(String[] seleccionePresentacionDatos) {
+        this.seleccionePresentacionDatos = seleccionePresentacionDatos;
+    }
+
+    public void setFiltroGerente(String[] filtroGerente) {
+        this.filtroGerente = filtroGerente;
+    }
+
+    public void setFiltroSupervisor(String[] filtroSupervisor) {
+        this.filtroSupervisor = filtroSupervisor;
+    }
+
+    public String[] getSeleccionePresentacionDatos() {
+        return seleccionePresentacionDatos;
+    }
+
+    public String[] getFiltroGerente() {
+        return filtroGerente;
+    }
+
+    public String[] getFiltroSupervisor() {
+        return filtroSupervisor;
+    }
 }

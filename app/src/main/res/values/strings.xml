@@ -42,6 +42,8 @@
     <string name="act_main_menu_6">CONFIGURAR</string>
     <string name="act_main_menu_7">CERRAR</string>
     <string name="act_main_informacion_actualizada">Informacion Actualizada</string>
+    <string name="act_main_cerrar_sesion_title">Cerrar Sesion</string>
+    <string name="act_main_cerrar_sesion_message">¿Está seguro que desea cerrar sesión?</string>
     <!-- - * - -->
 
     <!-- Activity Nuevo Evento -->
@@ -64,13 +66,20 @@
     <string name="act_listado_evento_no_hay_eventos_registrados">Actualmente no tiene ningun evento registrado.</string>
     <!-- - * - -->
 
-    <!-- Activity Graficos Estadisticos -->
+    <!-- Activity Graficos Piramide -->
     <string name="act_graficos_estadisticos_title">PIRAMIDE NACIONAL</string>
     <string name="act_graficos_estadisticos_texto_leyenda_muertes">Muerte / Incapacitantes</string>
     <string name="act_graficos_estadisticos_texto_leyenda_accidentes_personales">Accidentes Daños Personales</string>
     <string name="act_graficos_estadisticos_texto_leyenda_accidentes_propiedad">Accidentes Daños Propiedad</string>
     <string name="act_graficos_estadisticos_texto_leyenda_casi_accidentes">Casi Accidentes</string>
     <string name="act_graficos_estadisticos_texto_leyenda_condiciones_inseguras">Comportamiento de Riesgo / Condiciones Inseguras</string>
+    <!-- - * - -->
+
+    <!-- Activity Graficos Comportamiento Seguros -->
+    <string name="act_graf_comportamiento_seguros_texto_comportamiento_riesgo">Comportamiento riesgo</string>
+    <string name="act_graf_comportamiento_seguros_texto_comportamiento_seguro">Comportamiento seguro</string>
+    <string name="act_graf_comportamiento_seguros_error_configuracion_title">Error de Configuración</string>
+    <string name="act_graf_comportamiento_seguros_error_configuracion_message">Ocurrio un error al inicializar los datos de configuración del grafico., inténtalo de nuevo.</string>
     <!-- - * - -->
 
     <!-- Activity Exportar Excel -->
@@ -90,7 +99,7 @@
     <!-- Class: Connection -->
     <string name="please_connect_to_internet">Compruebe su conexión a Internet e inténtalo de nuevo.</string>
     <string name="title_dialog_connect_to_internet">No hay conexión a Internet.</string>
-    <string name="message_dialog_connect_to_internet"></string>
+    <string name="message_dialog_connect_to_internet">¿Desea activar o verificar su estado de conexion a Internet?</string>
 
     <!-- Class: JSONObject -->
     <string name="json_object_exception">Ocurrio un error al procesar los datos recibidos. Por favor, inténtalo de nuevo.</string>
@@ -99,7 +108,8 @@
     <string name="volley_error_title">Error de conexión</string>
     <string name="volley_error_message">Hubo un error y no se pudo procesar la solicitud.\n\nPor favor, inténtalo de nuevo.</string>
 
-    <!-- Class: ModalFiltroPiramide -->
+    <!-- Class: ModalFiltro -->
     <string name="modal_filtro_piramide_error_registro_operaciones">Actualmente no tiene ningun registro de operaciones, sincronice los datos antes de proceder a este sección.</string>
+    <string name="title_activity_grafico_comp_seguro">GraficoCompSeguroActivity</string>
 
 </resources>

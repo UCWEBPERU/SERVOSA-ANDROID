@@ -51,6 +51,7 @@ public class PyramidChart extends View {
         Paint paintLabel = new Paint();
         paintLabel.setColor(Color.WHITE);
         paintLabel.setTextSize(getResources().getDimensionPixelSize(R.dimen.fontSizePyramid));
+        paintLabel.setFakeBoldText(true);
         Rect boundsLabel = new Rect();
 
         if (this.data != null) {

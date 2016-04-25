@@ -1,11 +1,8 @@
 package pe.servosa.android;
 
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
@@ -14,7 +11,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -31,7 +27,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -46,7 +41,8 @@ import pe.servosa.android.sqlite.model.SqlRutaEntity;
 import pe.servosa.android.sqlite.model.SqlTipoEntity;
 import pe.servosa.android.sqlite.model.SqlTramoEntity;
 import pe.servosa.android.util.Banner;
-import pe.servosa.android.util.ModalFiltroPiramide;
+import pe.servosa.android.util.ModalGraficoEstadistico;
+import pe.servosa.android.util.ModalReporteExcel;
 import pe.servosa.android.util.MyPreferences;
 import pe.servosa.android.util.MyToolbar;
 import pe.servosa.android.util.internet.Connection;
@@ -106,6 +102,8 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getApplicationContext(), NuevoEventoActivity.class));
+//                Snackbar.make(v, "Replace with your own action", Snackbar.LENGTH_LONG)
+//                .setAction("Action", null).show();
             }
         });
 
@@ -119,14 +117,14 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
         btnGraficoPiramide.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ModalFiltroPiramide.getInstance().init(MainActivity.this).show(new Intent(MainActivity.this, GraficoPiramideActivity.class));
+                ModalGraficoEstadistico.getInstance(MainActivity.this).showModal();
             }
         });
 
         btnExportarExcel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ModalFiltroPiramide.getInstance().init(MainActivity.this).show(new Intent(MainActivity.this, ExportarExcelActivity.class));
+                ModalReporteExcel.getInstance(MainActivity.this).showModal();
             }
         });
 
@@ -136,28 +134,18 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
                 startActivity(new Intent(getApplicationContext(), ConfigurarActivity.class));
             }
         });
+
         btnActualizar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (Connection.hasNetworkConnectivity(getApplicationContext())) {
-                    progressDialog = new ProgressDialog(MainActivity.this);
-                    progressDialog.setTitle("Cargando Datos");
-                    progressDialog.setMessage("Espere un momento");
-                    progressDialog.setCancelable(false);
-                    progressDialog.setIndeterminate(true);
-                    progressDialog.show();
-                    getAllRegistros();
-                }else{
-                    Connection.showMessageNotConnectedToNetwork(MainActivity.this);
-                }
-
+                actualizarDatos();
             }
         });
 
         btnCerrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                close();
+                cerrarSesion();
             }
         });
 
@@ -180,23 +168,19 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
                 startActivity(new Intent(getApplicationContext(), ListadoEventosActivity.class));
                 break;
             case 2:
-                ModalFiltroPiramide.getInstance().init(MainActivity.this).show(new Intent(MainActivity.this, GraficoPiramideActivity.class));
+                ModalGraficoEstadistico.getInstance(MainActivity.this).showModal();
                 break;
             case 3:
-                ModalFiltroPiramide.getInstance().init(MainActivity.this).show(new Intent(MainActivity.this, ExportarExcelActivity.class));
+                ModalReporteExcel.getInstance(MainActivity.this).showModal();
                 break;
             case 4:
+                actualizarDatos();
                 break;
             case 5:
                 startActivity(new Intent(getApplicationContext(), ConfigurarActivity.class));
                 break;
             case 6:
-                MyPreferences.getInstance().edit()
-                        .remove("id")
-                        .remove("email")
-                        .remove("tipo_usuario")
-                        .remove("id_tipo_usuario").commit();
-                finish();
+                cerrarSesion();
                 break;
         }
     }
@@ -209,17 +193,29 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
                 .into(imgHeaderServosa);
     }
 
+    private void actualizarDatos() {
+        if (Connection.hasNetworkConnectivity(getApplicationContext())) {
+            progressDialog = new ProgressDialog(MainActivity.this);
+            progressDialog.setTitle("Cargando Datos");
+            progressDialog.setMessage("Espere un momento...");
+            progressDialog.setCancelable(false);
+            progressDialog.setIndeterminate(true);
+            progressDialog.show();
+            getAllRegistros();
+        }else{
+            Connection.showMessageNotConnectedToNetwork(MainActivity.this);
+        }
+    }
 
-    private void close(){
+    private void cerrarSesion(){
         new AlertDialog.Builder(this)
                 .setIcon(android.R.drawable.ic_dialog_alert)
-                .setTitle("Salir")
-                .setMessage("¿Está seguro que desea salir?")
+                .setTitle(getString(R.string.act_main_cerrar_sesion_title))
+                .setMessage(getString(R.string.act_main_cerrar_sesion_message))
                 .setNegativeButton(android.R.string.cancel, null)//sin listener
                 .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {//un listener que al pulsar, cierre la aplicacion
                     @Override
                     public void onClick(DialogInterface dialog, int which){
-
                         MyPreferences.getInstance().edit()
                                 .remove("id")
                                 .remove("email")
@@ -376,6 +372,7 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
             }
         }
     }
+
     private void cargarDatosSQLite() {
         sqlOperacionEntities = SqlOperacionEntity.listAll(SqlOperacionEntity.class);
         sqlRutaEntities = SqlRutaEntity.listAll(SqlRutaEntity.class);
@@ -385,4 +382,12 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
         sqlTipoEntities = SqlTipoEntity.listAll(SqlTipoEntity.class);
         sqlPlacaEntities = SqlPlacaEntity.listAll(SqlPlacaEntity.class);
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ModalGraficoEstadistico.getInstance(MainActivity.this).destroy();
+        ModalReporteExcel.getInstance(MainActivity.this).destroy();
+    }
+
 }

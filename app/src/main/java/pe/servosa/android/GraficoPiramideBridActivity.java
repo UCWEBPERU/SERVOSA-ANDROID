@@ -34,7 +34,7 @@ import pe.servosa.android.util.chart.PyramidChart;
 import pe.servosa.android.util.internet.CustomJsonObjectRequest;
 import pe.servosa.android.util.internet.MyVolley;
 
-public class GraficoPiramideActivity extends AppCompatActivity {
+public class GraficoPiramideBridActivity extends AppCompatActivity {
 
     @Bind(R.id.toolbar) Toolbar toolbar;
     @Bind(R.id.imgHeaderServosa) ImageView imgHeaderServosa;
@@ -55,15 +55,15 @@ public class GraficoPiramideActivity extends AppCompatActivity {
 
         if (getIntent().hasExtra("filtros")) {
             cargarTitulo();
-            MyPreferences.getInstance().init(GraficoPiramideActivity.this, "UserProfile");
+            MyPreferences.getInstance().init(GraficoPiramideBridActivity.this, "UserProfile");
             showLoading();
             cargarDatosPiramide();
         } else {
             tituloHeader.setText("PIRAMIDE");
-            new AlertDialog.Builder(GraficoPiramideActivity.this)
-                    .setTitle("Error de Configuración")
+            new AlertDialog.Builder(GraficoPiramideBridActivity.this)
+                    .setTitle(getString(R.string.act_graf_comportamiento_seguros_error_configuracion_title))
                     .setCancelable(false)
-                    .setMessage("Ocurrio un error al inicializar los datos de configuración de la piramide, inténtalo de nuevo.")
+                    .setMessage(getString(R.string.act_graf_comportamiento_seguros_error_configuracion_message))
                     .setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
@@ -87,11 +87,11 @@ public class GraficoPiramideActivity extends AppCompatActivity {
     private void cargarTitulo() {
         String filtro = getIntent().getExtras().getBundle("filtros").getString("filtro");
         if (filtro.equals("nacional")) {
-            tituloHeader.setText("PIRAMIDE NACIONAL");
+            tituloHeader.setText("GRAFICO NACIONAL");
         } else if (filtro.equals("region")) {
-            tituloHeader.setText("PIRAMIDE REGIONAL");
+            tituloHeader.setText("GRAFICO REGIONAL");
         } else if (filtro.equals("operacion")) {
-            tituloHeader.setText("PIRAMIDE OPERACION");
+            tituloHeader.setText("GRAFICO OPERACION");
         }
     }
 
@@ -128,11 +128,11 @@ public class GraficoPiramideActivity extends AppCompatActivity {
                                         mostrarPiramide(response.getJSONObject("data"));
                                     } else {
                                         cargarPiramideError();
-                                        Toast.makeText(GraficoPiramideActivity.this, response.getString("message"), Toast.LENGTH_LONG).show();
+                                        Toast.makeText(GraficoPiramideBridActivity.this, response.getString("message"), Toast.LENGTH_LONG).show();
                                     }
                                 } catch (JSONException ex) {
                                     cargarPiramideError();
-                                    Toast.makeText(GraficoPiramideActivity.this, getString(R.string.json_object_exception), Toast.LENGTH_LONG).show();
+                                    Toast.makeText(GraficoPiramideBridActivity.this, getString(R.string.json_object_exception), Toast.LENGTH_LONG).show();
                                 }
                             }
                         }, new Response.ErrorListener() {
@@ -140,7 +140,7 @@ public class GraficoPiramideActivity extends AppCompatActivity {
                     public void onErrorResponse(VolleyError error) {
                         progressDialog.dismiss();
                         cargarPiramideError();
-                        new AlertDialog.Builder(GraficoPiramideActivity.this)
+                        new AlertDialog.Builder(GraficoPiramideBridActivity.this)
                                 .setTitle(getString(R.string.volley_error_title))
                                 .setMessage(getString(R.string.volley_error_message))
                                 .setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
@@ -155,7 +155,7 @@ public class GraficoPiramideActivity extends AppCompatActivity {
                     }
                 });
 
-        MyVolley.getInstance(GraficoPiramideActivity.this).addToRequestQueue(request);
+        MyVolley.getInstance(GraficoPiramideBridActivity.this).addToRequestQueue(request);
     }
 
     private void mostrarPiramide(JSONObject data) {
@@ -169,7 +169,7 @@ public class GraficoPiramideActivity extends AppCompatActivity {
             pyramidChart.setData(valuesPiramide);
         } catch (JSONException ex) {
             cargarPiramideError();
-            Toast.makeText(GraficoPiramideActivity.this, "Lo sentimos ocurrio un error al procesar los datos de la piramide, inténtalo de nuevo.", Toast.LENGTH_LONG).show();
+            Toast.makeText(GraficoPiramideBridActivity.this, "Lo sentimos ocurrio un error al procesar los datos de la piramide, inténtalo de nuevo.", Toast.LENGTH_LONG).show();
         }
     }
 
@@ -183,7 +183,7 @@ public class GraficoPiramideActivity extends AppCompatActivity {
     }
 
     private void showLoading() {
-        progressDialog = new ProgressDialog(GraficoPiramideActivity.this);
+        progressDialog = new ProgressDialog(GraficoPiramideBridActivity.this);
         progressDialog.setTitle("Cargando Datos");
         progressDialog.setMessage("Espere un momento");
         progressDialog.setCancelable(false);

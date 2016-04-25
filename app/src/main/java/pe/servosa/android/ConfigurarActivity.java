@@ -39,6 +39,7 @@ import pe.servosa.android.sqlite.model.SqlRutaEntity;
 import pe.servosa.android.sqlite.model.SqlTipoEntity;
 import pe.servosa.android.sqlite.model.SqlTramoEntity;
 import pe.servosa.android.util.MyPreferences;
+import pe.servosa.android.util.MyToolbar;
 import pe.servosa.android.util.internet.Connection;
 import pe.servosa.android.util.internet.CustomJsonObjectRequest;
 import pe.servosa.android.util.internet.MyVolley;
@@ -70,7 +71,8 @@ public class ConfigurarActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_configurar);
         ButterKnife.bind(this);
-        setToolbar();
+        new MyToolbar(this, toolbar);
+
         Switch toggle_gps = (Switch) findViewById(R.id.s_gps);
         Switch toggle_wifi = (Switch) findViewById(R.id.s_wifi);
         Switch toggle_email = (Switch) findViewById(R.id.s_email);
@@ -134,13 +136,6 @@ public class ConfigurarActivity extends AppCompatActivity {
                 }
             }
         });
-    }
-
-    private void setToolbar() {
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("");
     }
 
     private void enviar(String[] to, String[] cc,

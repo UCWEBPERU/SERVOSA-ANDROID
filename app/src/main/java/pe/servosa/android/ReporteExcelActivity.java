@@ -43,7 +43,7 @@ import pe.servosa.android.util.TaskExportarExcel;
 import pe.servosa.android.util.internet.CustomJsonObjectRequest;
 import pe.servosa.android.util.internet.MyVolley;
 
-public class ExportarExcelActivity extends AppCompatActivity implements TaskExportarExcelDelegate{
+public class ReporteExcelActivity extends AppCompatActivity implements TaskExportarExcelDelegate{
     @Bind(R.id.toolbar) Toolbar toolbar;
     @Bind(R.id.lvListadoEventos) ListView lvListadoEventos;
     @Bind(R.id.imgHeaderServosa) ImageView imgHeaderServosa;
@@ -55,17 +55,17 @@ public class ExportarExcelActivity extends AppCompatActivity implements TaskExpo
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_exportar_excel);
+        setContentView(R.layout.activity_reporte_excel);
         ButterKnife.bind(this);
         new MyToolbar(this, toolbar);
         loadImages();
 
         if (getIntent().hasExtra("filtros")) {
-            MyPreferences.getInstance().init(ExportarExcelActivity.this, "UserProfile");
+            MyPreferences.getInstance().init(ReporteExcelActivity.this, "UserProfile");
             showLoading();
             cargarListadoEventos();
         } else {
-            new AlertDialog.Builder(ExportarExcelActivity.this)
+            new AlertDialog.Builder(ReporteExcelActivity.this)
                     .setTitle("Error de Configuración")
                     .setCancelable(false)
                     .setMessage("Ocurrio un error al inicializar los datos de configuración de la piramide, inténtalo de nuevo.")
@@ -110,8 +110,16 @@ public class ExportarExcelActivity extends AppCompatActivity implements TaskExpo
 
         Log.d("PARAMS", params.toString());
 
+        String url = "";
+
+        if (getIntent().getExtras().getBundle("filtros").getBoolean("isPiramideBrid")) {
+            url = "evento/getEventosPiramideExportarExcel";
+        } else {
+            url = "evento/getEventosComportamientoSeguroExportarExcel";
+        }
+
         CustomJsonObjectRequest request = new CustomJsonObjectRequest
-                (Request.Method.POST, MyVolley.URL_API_REST + "evento/getEventosExportarExcel", params,
+                (Request.Method.POST, MyVolley.URL_API_REST + url, params,
                         new Response.Listener<JSONObject>() {
                             @Override
                             public void onResponse(JSONObject response) {
@@ -121,17 +129,17 @@ public class ExportarExcelActivity extends AppCompatActivity implements TaskExpo
                                     if (response.getBoolean("status")) {
                                         procesarRegistros(response.getJSONArray("data"));
                                     } else {
-                                        Toast.makeText(ExportarExcelActivity.this, response.getString("message"), Toast.LENGTH_LONG).show();
+                                        Toast.makeText(ReporteExcelActivity.this, response.getString("message"), Toast.LENGTH_LONG).show();
                                     }
                                 } catch (JSONException ex) {
-                                    Toast.makeText(ExportarExcelActivity.this, getString(R.string.json_object_exception), Toast.LENGTH_LONG).show();
+                                    Toast.makeText(ReporteExcelActivity.this, getString(R.string.json_object_exception), Toast.LENGTH_LONG).show();
                                 }
                             }
                         }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         progressDialog.dismiss();
-                        new AlertDialog.Builder(ExportarExcelActivity.this)
+                        new AlertDialog.Builder(ReporteExcelActivity.this)
                                 .setTitle(getString(R.string.volley_error_title))
                                 .setMessage(getString(R.string.volley_error_message))
                                 .setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
@@ -146,7 +154,7 @@ public class ExportarExcelActivity extends AppCompatActivity implements TaskExpo
                     }
                 });
 
-        MyVolley.getInstance(ExportarExcelActivity.this).addToRequestQueue(request);
+        MyVolley.getInstance(ReporteExcelActivity.this).addToRequestQueue(request);
     }
 
     private void procesarRegistros(JSONArray data) {
@@ -182,13 +190,13 @@ public class ExportarExcelActivity extends AppCompatActivity implements TaskExpo
                         lvListadoEventos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                             @Override
                             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                                new TaskExportarExcel(ExportarExcelActivity.this).execute(registros, progressDialog);
+                                new TaskExportarExcel(ReporteExcelActivity.this).execute(registros, progressDialog);
                             }
                         });
                     }
                 }
             } else {
-                Toast.makeText(ExportarExcelActivity.this, getString(R.string.act_exportar_no_hay_registros), Toast.LENGTH_LONG).show();
+                Toast.makeText(ReporteExcelActivity.this, getString(R.string.act_exportar_no_hay_registros), Toast.LENGTH_LONG).show();
             }
         } catch (JSONException ex) {
             ex.printStackTrace();
@@ -227,7 +235,7 @@ public class ExportarExcelActivity extends AppCompatActivity implements TaskExpo
     }
 
     private void showLoading() {
-        progressDialog = new ProgressDialog(ExportarExcelActivity.this);
+        progressDialog = new ProgressDialog(ReporteExcelActivity.this);
         progressDialog.setTitle("Cargando Datos");
         progressDialog.setMessage("Espere un momento");
         progressDialog.setCancelable(false);
@@ -237,7 +245,7 @@ public class ExportarExcelActivity extends AppCompatActivity implements TaskExpo
 
     @Override
     public void taskOnInit() {
-        progressDialog = new ProgressDialog(ExportarExcelActivity.this);
+        progressDialog = new ProgressDialog(ReporteExcelActivity.this);
         progressDialog.setTitle("Exportando Excel");
         progressDialog.setMessage("Espere un momento");
         progressDialog.setCancelable(false);
@@ -248,7 +256,7 @@ public class ExportarExcelActivity extends AppCompatActivity implements TaskExpo
     @Override
     public void taskOnCompletion(File fileExcel) {
         progressDialog.dismiss();
-        Toast.makeText(ExportarExcelActivity.this, getString(R.string.act_exportar_success_exportar_excel), Toast.LENGTH_LONG).show();
+        Toast.makeText(ReporteExcelActivity.this, getString(R.string.act_exportar_success_exportar_excel), Toast.LENGTH_LONG).show();
         mostrarDetalleEvento(fileExcel);
     }
 }
