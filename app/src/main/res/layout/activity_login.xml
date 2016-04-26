@@ -76,7 +76,7 @@
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textEmailAddress"
+                    android:inputType="textCapCharacters|textEmailAddress"
                     android:ems="10"
                     android:id="@+id/txtUserName"
                     android:hint="@string/act_login_hint_input_username"

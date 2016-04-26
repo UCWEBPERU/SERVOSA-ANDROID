@@ -93,28 +93,17 @@ public abstract class ModalFiltro {
                         .create().show();
             } else if (posicionFiltroPrincipal == 2) {
                 cargarOperaciones();
-                if (filtroOperacion.size() > 0) {
-                    new AlertDialog.Builder(activity)
-                            .setTitle(filtroGerente[2])
-                            .setSingleChoiceItems(filtroOperacion.toArray(new String[0]), -1, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    dialog.dismiss();
-                                    bundle.putString("id_operacion", sqlOperacionEntities.get(which).getIDOperacion().toString());
-                                    bundle.putString("filtro", "operacion");
-                                    openActivity();
-                                }
-                            })
-                            .create().show();
-                }
+                seleccionarOperaciones();
             }
         } else if (MyPreferences.getInstance().getString("id_tipo_usuario", "").toLowerCase().equals("1")) { // Por Supervisor
             if (posicionFiltroPrincipal == 0) {
                 bundle.putString("filtro", "region");
+                openActivity();
             } else if (posicionFiltroPrincipal == 1) {
-                bundle.putString("filtro", "operacion");
+//                bundle.putString("filtro", "operacion");
+                cargarOperaciones();
+                seleccionarOperaciones();
             }
-            openActivity();
         }
     }
 
@@ -133,6 +122,23 @@ public abstract class ModalFiltro {
             }
         } else {
             Toast.makeText(activity, activity.getString(R.string.modal_filtro_piramide_error_registro_operaciones), Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private void seleccionarOperaciones() {
+        if (filtroOperacion.size() > 0) {
+            new AlertDialog.Builder(activity)
+                    .setTitle(filtroGerente[2])
+                    .setSingleChoiceItems(filtroOperacion.toArray(new String[0]), -1, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                            bundle.putString("id_operacion", sqlOperacionEntities.get(which).getIDOperacion().toString());
+                            bundle.putString("filtro", "operacion");
+                            openActivity();
+                        }
+                    })
+                    .create().show();
         }
     }
 

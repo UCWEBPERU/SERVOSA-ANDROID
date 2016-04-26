@@ -235,12 +235,17 @@ public class GraficoCompSeguroActivity extends AppCompatActivity {
             int comportamientoSeguro = jsonObject.getInt("comportamiento_seguro");
             int total = comportamientoRiesgo + comportamientoSeguro;
 
-            comportamientoRiesgo = (comportamientoRiesgo * 100) / total;
-            comportamientoSeguro = (comportamientoSeguro * 100) / total;
+            if (comportamientoRiesgo != 0 && comportamientoSeguro != 0) {
+                comportamientoRiesgo = (comportamientoRiesgo * 100) / total;
+                comportamientoSeguro = (comportamientoSeguro * 100) / total;
 
-            datosGrafico = new float[]{comportamientoRiesgo, comportamientoSeguro};
+                datosGrafico = new float[]{comportamientoRiesgo, comportamientoSeguro};
+            } else {
+                datosGrafico = new float[]{100, 0};
+                Toast.makeText(GraficoCompSeguroActivity.this, getString(R.string.act_graf_comportamiento_seguros_no_hay_registros), Toast.LENGTH_LONG).show();
+            }
         } catch (JSONException ex) {
-            Toast.makeText(GraficoCompSeguroActivity.this, "Lo sentimos ocurrio un error al procesar los datos de la piramide, inténtalo de nuevo.", Toast.LENGTH_LONG).show();
+            Toast.makeText(GraficoCompSeguroActivity.this, getString(R.string.json_object_exception), Toast.LENGTH_LONG).show();
         }
 
         return datosGrafico;

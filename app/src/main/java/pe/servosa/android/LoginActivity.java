@@ -149,6 +149,8 @@ public class LoginActivity extends AppCompatActivity {
                 .putString("id", usuario.getString("id_usuario"))
                 .putString("email", usuario.getString("email"))
                 .putString("username", txtUserName.getText().toString().trim())
+                .putString("nombre", usuario.getString("nombre"))
+                .putString("apellidos", usuario.getString("apellidos"))
                 .putString("tipo_usuario", usuario.getString("nombre_tipo_usuario"))
                 .putString("usuario", usuario.getString("usuario"))
                 .putString("id_tipo_usuario", usuario.getString("id_tipo_usuario"))

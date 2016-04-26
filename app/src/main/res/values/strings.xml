@@ -26,7 +26,7 @@
     <string name="nav_item_exportar_excel">Exportar Resumenes</string>
     <string name="nav_item_actualizar">Actualizar</string>
     <string name="nav_item_configurar">Configurar</string>
-    <string name="nav_item_cerrar">Cerrar</string>
+    <string name="nav_item_cerrar">Cerrar Sesión</string>
     <string name="drawer_open">Open</string>
     <string name="drawer_close">Close</string>
     <!-- - * - -->
@@ -80,6 +80,7 @@
     <string name="act_graf_comportamiento_seguros_texto_comportamiento_seguro">Comportamiento seguro</string>
     <string name="act_graf_comportamiento_seguros_error_configuracion_title">Error de Configuración</string>
     <string name="act_graf_comportamiento_seguros_error_configuracion_message">Ocurrio un error al inicializar los datos de configuración del grafico., inténtalo de nuevo.</string>
+    <string name="act_graf_comportamiento_seguros_no_hay_registros">No se encontro datos de comportamiento de riesgo y/o seguro registrados.</string>
     <!-- - * - -->
 
     <!-- Activity Exportar Excel -->

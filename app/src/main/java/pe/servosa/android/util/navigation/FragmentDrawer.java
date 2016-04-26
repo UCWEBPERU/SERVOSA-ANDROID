@@ -13,12 +13,19 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import org.apache.commons.lang3.text.WordUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import pe.servosa.android.R;
 import pe.servosa.android.model.NavDrawerItem;
+import pe.servosa.android.util.MyPreferences;
 
 /**
  * Created by ucweb02 on 07/04/2016.
@@ -27,7 +34,11 @@ public class FragmentDrawer extends Fragment {
 
     private static String TAG = FragmentDrawer.class.getSimpleName();
 
-    private RecyclerView recyclerView;
+    @Bind(R.id.drawerList) RecyclerView recyclerView;
+    @Bind(R.id.imgPerfilUser) ImageView imgPerfilUser;
+    @Bind(R.id.txtTipoUsuario) TextView txtTipoUsuario;
+    @Bind(R.id.txtNomApeUsuario) TextView txtNomApeUsuario;
+
     private ActionBarDrawerToggle mDrawerToggle;
     private DrawerLayout mDrawerLayout;
     private NavigationDrawerAdapter adapter;
@@ -42,7 +53,6 @@ public class FragmentDrawer extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         // drawer labels
         titles = getActivity().getResources().getStringArray(R.array.nav_drawer_labels);
     }
@@ -51,7 +61,8 @@ public class FragmentDrawer extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflating view layout
         View layout = inflater.inflate(R.layout.fragment_navigation_drawer, container, false);
-        recyclerView = (RecyclerView) layout.findViewById(R.id.drawerList);
+        ButterKnife.bind(this, layout);
+        cargarPefilUsuario();
 
         adapter = new NavigationDrawerAdapter(getActivity(), getData());
         recyclerView.setAdapter(adapter);
@@ -69,7 +80,20 @@ public class FragmentDrawer extends Fragment {
             }
         }));
 
+        imgPerfilUser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                drawerListener.onDrawerIconPerfilClick(view);
+            }
+        });
+
         return layout;
+    }
+
+    private void cargarPefilUsuario() {
+        txtTipoUsuario.setText(MyPreferences.getInstance().getString("tipo_usuario", ""));
+        String nombreApellidos = WordUtils.capitalizeFully(MyPreferences.getInstance().getString("nombre", "") + " " + MyPreferences.getInstance().getString("apellidos", ""));
+        txtNomApeUsuario.setText(nombreApellidos);
     }
 
     public void setDrawerListener(FragmentDrawerListener listener) {
@@ -182,5 +206,6 @@ public class FragmentDrawer extends Fragment {
 
     public interface FragmentDrawerListener {
         public void onDrawerItemSelected(View view, int position);
+        public void onDrawerIconPerfilClick(View view);
     }
 }

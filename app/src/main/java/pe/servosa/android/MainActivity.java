@@ -1,10 +1,14 @@
 package pe.servosa.android;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.ObjectAnimator;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v4.view.ViewPager;
+import android.support.v4.view.animation.FastOutSlowInInterpolator;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -65,6 +69,8 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
     private FragmentDrawer drawerFragment;
     private ProgressDialog progressDialog;
 
+
+    private ObjectAnimator objectAnimatorIconPerfil;
 
     private List<SqlOperacionEntity> sqlOperacionEntities;
     private List<SqlRutaEntity> sqlRutaEntities;
@@ -185,6 +191,14 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
         }
     }
 
+    @Override
+    public void onDrawerIconPerfilClick(View view) {
+        objectAnimatorIconPerfil = ObjectAnimator.ofFloat(view, "rotation", 0f, 1080f);
+        objectAnimatorIconPerfil.setDuration(3000);
+        objectAnimatorIconPerfil.setInterpolator(new FastOutSlowInInterpolator());
+        objectAnimatorIconPerfil.start();
+    }
+
     private void loadImages(){
         Glide.with(this)
                 .load(R.drawable.logo_servosa_header)
@@ -215,10 +229,13 @@ public class MainActivity extends AppCompatActivity implements FragmentDrawer.Fr
                 .setNegativeButton(android.R.string.cancel, null)//sin listener
                 .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {//un listener que al pulsar, cierre la aplicacion
                     @Override
-                    public void onClick(DialogInterface dialog, int which){
+                    public void onClick(DialogInterface dialog, int which) {
                         MyPreferences.getInstance().edit()
                                 .remove("id")
                                 .remove("email")
+                                .remove("username")
+                                .remove("nombre")
+                                .remove("apellidos")
                                 .remove("tipo_usuario")
                                 .remove("id_tipo_usuario").commit();
                         //Salir

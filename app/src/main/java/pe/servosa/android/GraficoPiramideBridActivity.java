@@ -169,7 +169,7 @@ public class GraficoPiramideBridActivity extends AppCompatActivity {
             pyramidChart.setData(valuesPiramide);
         } catch (JSONException ex) {
             cargarPiramideError();
-            Toast.makeText(GraficoPiramideBridActivity.this, "Lo sentimos ocurrio un error al procesar los datos de la piramide, inténtalo de nuevo.", Toast.LENGTH_LONG).show();
+            Toast.makeText(GraficoPiramideBridActivity.this, getString(R.string.json_object_exception), Toast.LENGTH_LONG).show();
         }
     }
 

@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.Toast;
 import android.widget.ToggleButton;
@@ -20,6 +21,8 @@ import android.widget.ToggleButton;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -47,6 +50,7 @@ import pe.servosa.android.util.internet.MyVolley;
 public class ConfigurarActivity extends AppCompatActivity {
 
     @Bind(R.id.toolbar) Toolbar toolbar;
+    @Bind(R.id.imgHeaderServosa) ImageView imgHeaderServosa;
 
     private List<SqlOperacionEntity> sqlOperacionEntities;
     private List<SqlRutaEntity> sqlRutaEntities;
@@ -72,6 +76,7 @@ public class ConfigurarActivity extends AppCompatActivity {
         setContentView(R.layout.activity_configurar);
         ButterKnife.bind(this);
         new MyToolbar(this, toolbar);
+        loadImages();
 
         Switch toggle_gps = (Switch) findViewById(R.id.s_gps);
         Switch toggle_wifi = (Switch) findViewById(R.id.s_wifi);
@@ -136,6 +141,14 @@ public class ConfigurarActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    private void loadImages(){
+        Glide.with(this)
+                .load(R.drawable.logo_servosa_header)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .crossFade()
+                .into(imgHeaderServosa);
     }
 
     private void enviar(String[] to, String[] cc,

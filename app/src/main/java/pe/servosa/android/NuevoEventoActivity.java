@@ -86,21 +86,6 @@ public class NuevoEventoActivity extends AppCompatActivity {
 
         activityManager = new ActivityManager();
 
-//        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.text_spinner, listSeleccioneOperacion);
-//        spnrSeleccioneOperacion.setAdapter(adapter);
-//        adapter = new ArrayAdapter<String>(this, R.layout.text_spinner, listSeleccioneRuta);
-//        spnrSeleccioneRuta.setAdapter(adapter);
-//        adapter = new ArrayAdapter<String>(this, R.layout.text_spinner, listSeleccioneTramo);
-//        spnrSeleccioneTramo.setAdapter(adapter);
-//        adapter = new ArrayAdapter<String>(this, R.layout.text_spinner, listSeleccioneEvento);
-//        spnrSeleccioneEvento.setAdapter(adapter);
-//        adapter = new ArrayAdapter<String>(this, R.layout.text_spinner, listSeleccioneCategoria);
-//        spnrSeleccioneCategoria.setAdapter(adapter);
-//        adapter = new ArrayAdapter<String>(this, R.layout.text_spinner, listSeleccioneTipo);
-//        spnrSeleccioneTipo.setAdapter(adapter);
-//        adapter = new ArrayAdapter<String>(this, R.layout.text_spinner, listSeleccioneNumPlaca);
-//        spnrSeleccioneNumPlaca.setAdapter(adapter);
-
         new TaskPing().execute(this);
     }
 
