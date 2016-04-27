@@ -24,6 +24,7 @@ import com.android.volley.VolleyError;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
+import org.apache.commons.lang3.ObjectUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -44,6 +45,7 @@ import pe.servosa.android.model.PlacaEntity;
 import pe.servosa.android.model.RutaEntity;
 import pe.servosa.android.model.TipoEntity;
 import pe.servosa.android.model.TramoEntity;
+import pe.servosa.android.sqlite.DB;
 import pe.servosa.android.sqlite.model.SqlCategoriaEntity;
 import pe.servosa.android.sqlite.model.SqlEventoEntity;
 import pe.servosa.android.sqlite.model.SqlEventoRiesgoEntity;
@@ -263,12 +265,18 @@ public class NuevoEventoActivity extends AppCompatActivity {
                 progressDialog.setIndeterminate(true);
                 progressDialog.show();
                 cargarDatosSQLite();
-                if (sqlEventoEntities.size() == 0) {
+                try {
+                    if (sqlEventoEntities.size() == 0) {
+                        mostrarRegistros();
+                        getAllRegistros();
+                    } else {
+                        mostrarRegistros();
+                        progressDialog.dismiss();
+                    }
+                } catch (NullPointerException ex) {
+                    ex.printStackTrace();
                     mostrarRegistros();
                     getAllRegistros();
-                } else {
-                    mostrarRegistros();
-                    progressDialog.dismiss();
                 }
             } else {
                 cargarDatosSQLite();
@@ -317,13 +325,17 @@ public class NuevoEventoActivity extends AppCompatActivity {
         }
 
         private void cargarDatosSQLite() {
-            sqlOperacionEntities = SqlOperacionEntity.listAll(SqlOperacionEntity.class);
-            sqlRutaEntities = SqlRutaEntity.listAll(SqlRutaEntity.class);
-            sqlTramoEntities = SqlTramoEntity.listAll(SqlTramoEntity.class);
-            sqlEventoEntities = SqlEventoEntity.listAll(SqlEventoEntity.class);
-            sqlCategoriaEntities = SqlCategoriaEntity.listAll(SqlCategoriaEntity.class);
-            sqlTipoEntities = SqlTipoEntity.listAll(SqlTipoEntity.class);
-            sqlPlacaEntities = SqlPlacaEntity.listAll(SqlPlacaEntity.class);
+            try {
+                sqlOperacionEntities = SqlOperacionEntity.listAll(SqlOperacionEntity.class);
+                sqlRutaEntities = SqlRutaEntity.listAll(SqlRutaEntity.class);
+                sqlTramoEntities = SqlTramoEntity.listAll(SqlTramoEntity.class);
+                sqlEventoEntities = SqlEventoEntity.listAll(SqlEventoEntity.class);
+                sqlCategoriaEntities = SqlCategoriaEntity.listAll(SqlCategoriaEntity.class);
+                sqlTipoEntities = SqlTipoEntity.listAll(SqlTipoEntity.class);
+                sqlPlacaEntities = SqlPlacaEntity.listAll(SqlPlacaEntity.class);
+            } catch (ExceptionInInitializerError ex) {
+                ex.printStackTrace();
+            }
         }
 
         private void mostrarRegistros() {
@@ -463,11 +475,12 @@ public class NuevoEventoActivity extends AppCompatActivity {
             @Override
             protected Boolean doInBackground(JSONObject... params) {
 
+                DB.deleteAll();
+
                 try {
                     JSONArray jsonArray = params[0].getJSONArray("dataOperaciones");
                     JSONObject jsonObject;
 
-                    SqlOperacionEntity.deleteAll(SqlOperacionEntity.class);
                     for (int c = 0; c < jsonArray.length(); c++) {
                         jsonObject = jsonArray.getJSONObject(c);
                         sqlOperacionEntity = new SqlOperacionEntity(
@@ -478,7 +491,6 @@ public class NuevoEventoActivity extends AppCompatActivity {
                     }
 
                     jsonArray = params[0].getJSONArray("dataRutas");
-                    SqlRutaEntity.deleteAll(SqlRutaEntity.class);
                     for (int c = 0; c < jsonArray.length(); c++) {
                         jsonObject = jsonArray.getJSONObject(c);
                         sqlRutaEntity = new SqlRutaEntity(
@@ -489,7 +501,6 @@ public class NuevoEventoActivity extends AppCompatActivity {
                     }
 
                     jsonArray = params[0].getJSONArray("dataTramos");
-                    SqlTramoEntity.deleteAll(SqlTramoEntity.class);
                     for (int c = 0; c < jsonArray.length(); c++) {
                         jsonObject = jsonArray.getJSONObject(c);
                         sqlTramoEntity = new SqlTramoEntity(
@@ -501,7 +512,6 @@ public class NuevoEventoActivity extends AppCompatActivity {
                     }
 
                     jsonArray = params[0].getJSONArray("dataEventos");
-                    SqlEventoEntity.deleteAll(SqlEventoEntity.class);
                     for (int c = 0; c < jsonArray.length(); c++) {
                         jsonObject = jsonArray.getJSONObject(c);
                         sqlEventoEntity = new SqlEventoEntity(
@@ -512,7 +522,6 @@ public class NuevoEventoActivity extends AppCompatActivity {
                     }
 
                     jsonArray = params[0].getJSONArray("dataCategorias");
-                    SqlCategoriaEntity.deleteAll(SqlCategoriaEntity.class);
                     for (int c = 0; c < jsonArray.length(); c++) {
                         jsonObject = jsonArray.getJSONObject(c);
                         sqlCategoriaEntity = new SqlCategoriaEntity(
@@ -524,7 +533,6 @@ public class NuevoEventoActivity extends AppCompatActivity {
                     }
 
                     jsonArray = params[0].getJSONArray("dataTipos");
-                    SqlTipoEntity.deleteAll(SqlTipoEntity.class);
                     for (int c = 0; c < jsonArray.length(); c++) {
                         jsonObject = jsonArray.getJSONObject(c);
                         sqlTipoEntity = new SqlTipoEntity(
@@ -536,7 +544,6 @@ public class NuevoEventoActivity extends AppCompatActivity {
                     }
 
                     jsonArray = params[0].getJSONArray("dataPlacas");
-                    SqlPlacaEntity.deleteAll(SqlPlacaEntity.class);
                     for (int c = 0; c < jsonArray.length(); c++) {
                         jsonObject = jsonArray.getJSONObject(c);
                         sqlPlacaEntity = new SqlPlacaEntity(

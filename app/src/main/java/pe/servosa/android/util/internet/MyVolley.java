@@ -15,7 +15,7 @@ public class MyVolley {
 //    private ImageLoader mImageLoader;
     private static Context mCtx;
 
-    public static final String URL_API_REST = "http://www.uc-web.mobi/SERVOSA-REST/api-rest/";
+    public static final String URL_API_REST = "http://www.uc-web.mobi/SERVOSA/api-rest/";
 
     private MyVolley(Context context) {
         mCtx = context;

@@ -114,15 +114,22 @@ public abstract class ModalFiltro {
 
     private void cargarOperaciones() {
         filtroOperacion = new ArrayList<>();
-        sqlOperacionEntities = SqlOperacionEntity.listAll(SqlOperacionEntity.class);
 
-        if (sqlOperacionEntities.size() > 0) {
-            for (int c = 0; c < sqlOperacionEntities.size(); c++) {
-                filtroOperacion.add(sqlOperacionEntities.get(c).getNombreOperacion());
+        try {
+            sqlOperacionEntities = SqlOperacionEntity.listAll(SqlOperacionEntity.class);
+
+            if (sqlOperacionEntities.size() > 0) {
+                for (int c = 0; c < sqlOperacionEntities.size(); c++) {
+                    filtroOperacion.add(sqlOperacionEntities.get(c).getNombreOperacion());
+                }
+            } else {
+                Toast.makeText(activity, activity.getString(R.string.modal_filtro_piramide_error_registro_operaciones), Toast.LENGTH_LONG).show();
             }
-        } else {
+        } catch (ExceptionInInitializerError ex) {
+            ex.printStackTrace();
             Toast.makeText(activity, activity.getString(R.string.modal_filtro_piramide_error_registro_operaciones), Toast.LENGTH_LONG).show();
         }
+
     }
 
     private void seleccionarOperaciones() {

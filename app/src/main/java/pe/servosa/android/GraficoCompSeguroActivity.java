@@ -23,6 +23,7 @@ import com.android.volley.VolleyError;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
+import org.achartengine.model.SeriesSelection;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -33,6 +34,7 @@ import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import lecho.lib.hellocharts.listener.PieChartOnValueSelectListener;
 import lecho.lib.hellocharts.model.PieChartData;
 import lecho.lib.hellocharts.model.SliceValue;
 import lecho.lib.hellocharts.view.PieChartView;
@@ -48,6 +50,7 @@ public class GraficoCompSeguroActivity extends AppCompatActivity {
     @Bind(R.id.tituloHeader) TextView tituloHeader;
 
     private ProgressDialog progressDialog;
+    private static int datosGraficoJSON[] = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -129,7 +132,8 @@ public class GraficoCompSeguroActivity extends AppCompatActivity {
 
             chart = (PieChartView) rootView.findViewById(R.id.chart);
             chart.setChartRotationEnabled(false);
-            chart.setInteractive(false);
+            chart.setOnValueTouchListener(new ValueTouchListener());
+            chart.setZoomEnabled(false);
 
             loadData();
 
@@ -154,6 +158,26 @@ public class GraficoCompSeguroActivity extends AppCompatActivity {
             data.setHasCenterCircle(hasCenterCircle);
 
             chart.setPieChartData(data);
+        }
+
+        private class ValueTouchListener implements PieChartOnValueSelectListener {
+
+            @Override
+            public void onValueSelected(int arcIndex, SliceValue value) {
+//                Toast.makeText(getActivity(), "Selected: " + value, Toast.LENGTH_SHORT).show();
+                if (arcIndex == 0) {
+                    Toast.makeText(getActivity(), "Comportamiento Riesgo: " + datosGraficoJSON[arcIndex] + " eventos.", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getActivity(), "Comportamiento Seguro: " + datosGraficoJSON[arcIndex] + " eventos.", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onValueDeselected() {
+                // TODO Auto-generated method stub
+
+            }
+
         }
 
     }
@@ -230,17 +254,21 @@ public class GraficoCompSeguroActivity extends AppCompatActivity {
         float datosGrafico[] = null;
 
         try {
-
             int comportamientoRiesgo = jsonObject.getInt("comportamiento_riesgo");
             int comportamientoSeguro = jsonObject.getInt("comportamiento_seguro");
             int total = comportamientoRiesgo + comportamientoSeguro;
 
-            if (comportamientoRiesgo != 0 && comportamientoSeguro != 0) {
-                comportamientoRiesgo = (comportamientoRiesgo * 100) / total;
-                comportamientoSeguro = (comportamientoSeguro * 100) / total;
+            datosGraficoJSON = new int[]{comportamientoRiesgo, comportamientoSeguro};
 
-                datosGrafico = new float[]{comportamientoRiesgo, comportamientoSeguro};
-            } else {
+            if (comportamientoRiesgo != 0) {
+                comportamientoRiesgo = (comportamientoRiesgo * 100) / total;
+            }
+            if (comportamientoSeguro != 0) {
+                comportamientoSeguro = (comportamientoSeguro * 100) / total;
+            }
+            datosGrafico = new float[]{comportamientoRiesgo, comportamientoSeguro};
+
+            if (comportamientoRiesgo == 0 && comportamientoSeguro == 0) {
                 datosGrafico = new float[]{100, 0};
                 Toast.makeText(GraficoCompSeguroActivity.this, getString(R.string.act_graf_comportamiento_seguros_no_hay_registros), Toast.LENGTH_LONG).show();
             }

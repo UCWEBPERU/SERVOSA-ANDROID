@@ -11,7 +11,7 @@ public class Configuration extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-
+        SugarContext.init(this);
         // UNIVERSAL IMAGE LOADER SETUP
 //        DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder()
 //                .cacheOnDisc(true).cacheInMemory(true)
@@ -60,8 +60,6 @@ public class Configuration extends Application {
 //
 //        ImageLoader.getInstance().init(config);
         // END - UNIVERSAL IMAGE LOADER SETUP
-
-        SugarContext.init(this);
     }
 
     @Override

@@ -34,6 +34,7 @@ import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import pe.servosa.android.sqlite.DB;
 import pe.servosa.android.sqlite.model.SqlCategoriaEntity;
 import pe.servosa.android.sqlite.model.SqlEventoEntity;
 import pe.servosa.android.sqlite.model.SqlOperacionEntity;
@@ -202,11 +203,12 @@ public class ConfigurarActivity extends AppCompatActivity {
         @Override
         protected Boolean doInBackground(JSONObject... params) {
 
+            DB.deleteAll();
+
             try {
                 JSONArray jsonArray = params[0].getJSONArray("dataOperaciones");
                 JSONObject jsonObject;
 
-                SqlOperacionEntity.deleteAll(SqlOperacionEntity.class);
                 for (int c = 0; c < jsonArray.length(); c++) {
                     jsonObject = jsonArray.getJSONObject(c);
                     sqlOperacionEntity = new SqlOperacionEntity(
@@ -217,7 +219,6 @@ public class ConfigurarActivity extends AppCompatActivity {
                 }
 
                 jsonArray = params[0].getJSONArray("dataRutas");
-                SqlRutaEntity.deleteAll(SqlRutaEntity.class);
                 for (int c = 0; c < jsonArray.length(); c++) {
                     jsonObject = jsonArray.getJSONObject(c);
                     sqlRutaEntity = new SqlRutaEntity(
@@ -228,7 +229,6 @@ public class ConfigurarActivity extends AppCompatActivity {
                 }
 
                 jsonArray = params[0].getJSONArray("dataTramos");
-                SqlTramoEntity.deleteAll(SqlTramoEntity.class);
                 for (int c = 0; c < jsonArray.length(); c++) {
                     jsonObject = jsonArray.getJSONObject(c);
                     sqlTramoEntity = new SqlTramoEntity(
@@ -240,7 +240,6 @@ public class ConfigurarActivity extends AppCompatActivity {
                 }
 
                 jsonArray = params[0].getJSONArray("dataEventos");
-                SqlEventoEntity.deleteAll(SqlEventoEntity.class);
                 for (int c = 0; c < jsonArray.length(); c++) {
                     jsonObject = jsonArray.getJSONObject(c);
                     sqlEventoEntity = new SqlEventoEntity(
@@ -251,7 +250,6 @@ public class ConfigurarActivity extends AppCompatActivity {
                 }
 
                 jsonArray = params[0].getJSONArray("dataCategorias");
-                SqlCategoriaEntity.deleteAll(SqlCategoriaEntity.class);
                 for (int c = 0; c < jsonArray.length(); c++) {
                     jsonObject = jsonArray.getJSONObject(c);
                     sqlCategoriaEntity = new SqlCategoriaEntity(
@@ -263,7 +261,6 @@ public class ConfigurarActivity extends AppCompatActivity {
                 }
 
                 jsonArray = params[0].getJSONArray("dataTipos");
-                SqlTipoEntity.deleteAll(SqlTipoEntity.class);
                 for (int c = 0; c < jsonArray.length(); c++) {
                     jsonObject = jsonArray.getJSONObject(c);
                     sqlTipoEntity = new SqlTipoEntity(
@@ -275,7 +272,6 @@ public class ConfigurarActivity extends AppCompatActivity {
                 }
 
                 jsonArray = params[0].getJSONArray("dataPlacas");
-                SqlPlacaEntity.deleteAll(SqlPlacaEntity.class);
                 for (int c = 0; c < jsonArray.length(); c++) {
                     jsonObject = jsonArray.getJSONObject(c);
                     sqlPlacaEntity = new SqlPlacaEntity(
@@ -308,6 +304,7 @@ public class ConfigurarActivity extends AppCompatActivity {
             }
         }
     }
+
     private void cargarDatosSQLite() {
         sqlOperacionEntities = SqlOperacionEntity.listAll(SqlOperacionEntity.class);
         sqlRutaEntities = SqlRutaEntity.listAll(SqlRutaEntity.class);
